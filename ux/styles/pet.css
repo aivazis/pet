@@ -1,0 +1,187 @@
+/*  -*- CSS -*-  */
+/*
+ * michael a.g. aïvázis <michael.aivazis@para-sim.com>
+ * (c) 1998-2025 all rights reserved
+ */
+
+/* the anchor for the react content */
+#pet {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* placeholder while the react components load*/
+div#placeholder {
+    /* color: #f37f19; */
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+}
+
+svg#placeholder_logo {
+    margin: 1.0em auto;
+    width: 216px;
+    height: 301px;
+
+    animation-name: fadeInOut;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+
+p#placeholder_text {
+    font-family: "inconsolata";
+    font-size: 120%;
+    text-align: center;
+}
+
+* {
+    margin: 0.0em;
+    padding: 0.0em;
+}
+
+html {
+    /* defaults */
+    font-family: "geneva", "arial", "helvetica", sans-serif;
+    /* 1.0 rem = 20 pixels */
+    font-size: 20px;
+
+    /* placement */
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    /* placement */
+    height: 100%;
+    width: 100%;
+    margin: 0em;
+    padding: 0em;
+
+    /* clip to my extent */
+    overflow: clip;
+    /* colors */
+    color: #666;
+    background-color: #1b1b1b;
+}
+
+code,
+tt,
+kbd,
+samp {
+    font-family: inconsolata;
+}
+
+a:link {
+    color: #666;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+a:active {
+    color: #666;
+    text-decoration: none;
+}
+
+/* fonts */
+@font-face {
+    font-family: "didot";
+    src: url("../fonts/didot.ttf");
+}
+
+@font-face {
+    font-family: "inconsolata";
+    src: url("../fonts/inconsolata.ttf");
+}
+
+@font-face {
+    font-family: "rubik-medium";
+    src: url("../fonts/rubik-medium.ttf");
+}
+
+@font-face {
+    font-family: "rubik-light";
+    src: url("../fonts/rubik-light.ttf");
+}
+
+@font-face {
+    font-family: "noto";
+    src: url("../fonts/noto.ttf");
+}
+
+@font-face {
+    font-family: "noto-italic";
+    src: url("../fonts/noto-italic.ttf");
+}
+
+@font-face {
+    font-family: "roboto";
+    src: url("../fonts/roboto.ttf");
+}
+
+@font-face {
+    font-family: "roboto-italic";
+    src: url("../fonts/roboto-italic.ttf");
+}
+
+
+/* animations */
+@keyframes busy {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.0;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1.0;
+    }
+
+    to {
+        opacity: 0.0;
+    }
+}
+
+@keyframes fadeInOut {
+    from {
+        opacity: 0.0;
+    }
+
+    50% {
+        opacity: 1.0;
+    }
+
+    to {
+        opacity: 0.0;
+    }
+}
+
+/* end of file */

@@ -1,0 +1,33 @@
+# -*- pyre -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+# bind the application mission to a NISAR mission named "example"
+mission: nisar#example
+
+# the configuration of the example mission
+example:
+  # the list of spacecraft flown by the mission
+  craft:
+    - nisar#primary
+    - nisar#secondary
+
+# the configuration of the primary spacecraft
+primary:
+  # the list of instruments carried by the craft
+  instruments:
+    - nisar#L-band
+    - nisar#S-band
+
+# the configuration of the secondary spacecraft
+secondary:
+  # the NAIF id of this craft
+  naif: -199
+  # the list of instruments carried by the craft
+  instruments:
+    - nisar#L-band
+
+
+ # end of file

@@ -1,0 +1,27 @@
+# -*- makefile -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+# configuration for libpet
+pet.lib.stem := pet
+# its location
+pet.lib.root := lib/pet/
+# dependencies on external packages
+pet.lib.extern := pyre
+
+# use c++20
+pet.lib.c++.flags += $($(compiler.c++).std.c++20)
+
+# the autogen files
+pet.lib.headers.autogen := version.h.in
+# the expansion table
+pet.lib.autogen = \
+    @MAJOR@|$(pet.major)\
+    @MINOR@|$(pet.minor) \
+    @MICRO@|$(pet.micro) \
+    @REVISION@|$(pet.revision) \
+
+
+# end of file

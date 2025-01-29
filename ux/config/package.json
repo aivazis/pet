@@ -1,0 +1,50 @@
+{
+    "name": "pet",
+    "version": "0.0.1",
+    "description": "an environment for building planetary exploration twins",
+    "license": "BSD-2-Clause",
+    "repository": "https://github.com/aivazis/pet",
+    "author": "Michael Aivazis <michael.aivazis@para-sim.com>",
+    "scripts": {
+        "build": "webpack --mode development",
+        "dev": "webpack --mode development",
+        "relay": "relay-compiler"
+    },
+    "relay": {
+        "src": "./client",
+        "artifactDirectory": "./generated",
+        "schema": "./schema/pet.gql",
+        "language": "typescript"
+    },
+    "devDependencies": {
+        "@babel/core": "latest",
+        "@babel/preset-env": "latest",
+        "@babel/preset-react": "latest",
+        "@babel/plugin-proposal-export-default-from": "latest",
+        "babel-loader": "latest",
+        "babel-plugin-relay": "latest",
+        "babel-plugin-styled-components": "latest",
+        "html-webpack-plugin": "latest",
+        "relay-compiler": "latest",
+        "ts-loader": "latest",
+        "typescript": "latest",
+        "webpack": "latest",
+        "webpack-cli": "latest",
+        "@types/react": "latest",
+        "@types/react-relay": "latest",
+        "@mdx-js/loader": "latest"
+    },
+    "dependencies": {
+        "graphql": "latest",
+        "lazysizes": "latest",
+        "lodash": "latest",
+        "path-browserify": "latest",
+        "react": "<19",
+        "react-dom": "<19",
+        "react-relay": "latest",
+        "react-router": "latest",
+        "react-router-dom": "latest",
+        "react-syntax-highlighter": "latest",
+        "regenerator-runtime": "latest"
+    }
+}

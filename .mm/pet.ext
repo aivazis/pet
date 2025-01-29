@@ -1,0 +1,22 @@
+# -*- makefile -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+# naming seed
+pet.ext.stem := pet
+# its location
+pet.ext.root := ext/pet/
+
+# these are bindings for
+pet.ext.wraps := pet.lib
+# built with pybind11
+pet.ext.capsule :=
+# dependencies on external packages
+pet.ext.extern := pet.lib pyre pybind11 python
+# compiler control
+pet.ext.lib.c++.flags += $($(compiler.c++).std.c++20)
+
+
+# end of file

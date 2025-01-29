@@ -1,0 +1,927 @@
+{/*
+    -* mdx -*-
+    michael a.g. aïvázis <michael.aivazis@para-sim.com>
+    (c) 1998-2025 all rights reserved
+*/}
+
+
+{/* local */}
+import { Picture } from './picture'
+import { Pyre, Component, Protocol } from './pyre'
+
+{/* content */}
+# <a name="design" />Design
+
+The problem `pet` is trying to solve is rather complex. We are looking to build a framework for
+exploring mission configurations and assessing their performance. There are many moving parts in
+setting up a mission simulation, and the problem is more complex during the mission design phase
+where it's not yet clear what the actual parts are.
+
+Concepts from object oriented programming can help simplify the task. Using NISAR as an example, one
+can argue that the Earth is the <Protocol>Observable</Protocol> and the instrument is an
+<Protocol>Observer</Protocol>. The operational details and the data gathering can be abstracted as
+an <Protocol>Observation</Protocol>.
+
+Let's flesh out the <Protocol>Observer</Protocol> concept a bit further. One can argue that a
+<Protocol>Mission</Protocol> is a kind of <Protocol>Observer</Protocol>, with
+<Component>NISAR</Component> being a specific mission. The NISAR mission flies a
+<Component>Spacecraft</Component>, a kind of <Protocol>Craft</Protocol>. There are many types of
+craft: <Protocol>Aircraft</Protocol>, <Protocol>Orbiter</Protocol>, and <Protocol>Lander</Protocol>,
+ to name a few. More specifically, the NISAR spacecraft is an <Protocol>Orbiter</Protocol> that
+carries two <Component>NISAR</Component> instruments, each a <Protocol>SAR</Protocol>, which is a
+type of <Protocol>Instrument</Protocol>. Typically, it is easy to distinguish from context whether
+one is using NISAR to refer to the mission or the instruments. When modelling this in a language
+that supports object oriented programming, these would be our abstract base classes that define our
+vocabulary and set the stage for modelling complex missions.
+
+Actually, we can generalize these ideas a bit more. Let's support missions that fly constellations
+by requiring that <Protocol>Mission</Protocol> hold a list of <Protocol>Craft</Protocol>. In turn,
+<Protocol>Craft</Protocol> may carry more than one <Protocol>Instrument</Protocol>.
+
+### <a name="design.pyre" />Leveraging <Pyre/>
+When experimenting with mission design, it is important to be able to quickly assemble a mission by
+selecting which craft to fly and loading them with instruments. A good object oriented
+implementation simplifies this process quite a bit by providing a clear mapping between the words
+one would use to describe the mission particulars and the set of classes that must be instantiated
+to build it. Unfortunately, object oriented programming doesn't go far enough for our purposes.
+Reconfiguring a mission requires changes to the source code of the mission script, a process that
+requires skill and entails risk.
+
+Ideally, we would like to let the end user assemble the mission parts from some human readable
+configuration file, a web form, or even the command line. This is a form of [inversion of
+control](https://en.wikipedia.org/wiki/Inversion_of_control). User inputs can be validated,
+mistakes can be caught and reported, all without touching the source code of the application. The
+<Pyre/> framework augments the python typing system with the machinery necessary to accomplish
+ this inversion and give end users the power to control the application composition.
+
+In <Pyre/>, concrete classes that are accessible by the end user are called *components*. Component
+attributes that are configurable by the end user are called *traits* and are specially marked so
+that <Pyre/> can identify them. The abstract classes that set the requirements are called
+*protocols*. Components *implement* protocols, but do not derive from them, which completely
+decouples the classes that describe requirements from the classes that satisfy these requirements,
+as far as python is concerned. One can express the requirement that <Protocol>Craft</Protocol>
+carry a list of <Protocol>Instrument</Protocol>, and let the user specify at runtime which specific
+types of instruments are instantiated to be carried by the mission craft. Details about how to code
+up these relationships are in the following sections.
+
+### <a name="design.mission" />Fleshing out the mission abstractions
+
+Let's start building the code, starting with the protocols. By convention, each source file contains
+one class and their names match. The `pet` protocols all live in `pet/protocols`, so feel
+free to peek there for the actual implementation. `pet` imports `pyre` under the hood and
+publishes a subset of the framework capabilities as its own.
+
+The most basic concept so far has been the <Protocol>Instrument</Protocol>. Its implementation is in
+ `pet/protocols/Instrument.py`:
+
+ ``` python
+ # support
+ import pet
+
+ # the instrument protocol
+ class Instrument(pet.protocol, family="pet.instruments"):
+    """
+    The requirements that all instruments must satisfy
+    """
+
+ # end of file
+ ```
+
+<Protocol>Instrument</Protocol> is a protocol because it derives from `pet.protocol`. We don't
+have much in terms of explicit requirements just yet. The `family` setting in the `Instrument` class
+declaration marks the protocol as public, i.e. visible to the end user. It's role is to provide
+context for component resolution, as will see in a bit. By convention, the family names of
+protocols are plural nouns.
+
+<Protocol>SAR</Protocol> is a subclass of <Protocol>Instrument</Protocol>, so it is also a protocol.
+Its definition is in `pet/protocols/SAR.py`:
+
+``` python
+# superclass
+from .Instrument import Instrument
+
+# the SAR requirements
+class SAR(Instrument, family="pet.instruments.sar"):
+    """
+    The requirements for SAR instruments
+    """
+
+# end of file
+```
+
+Note that its family name is scoped within the <Protocol>Instrument</Protocol> family, also by
+convention. These conventions are meaningful to <Pyre/>, so it's a good idea to follow them.
+
+The <Pyre/> framework provides a visual language for expressing everything we have done so far:
+
+<Picture src="figures/protocols-instrument.png" width="30%" />
+
+The two protocols are shown with their family names. The arrow indicates that
+<Protocol>SAR</Protocol> is a subclass of <Protocol>Instrument</Protocol> and points from a class
+towards its base.
+
+We now have the vocabulary necessary to specify a <Protocol>Craft</Protocol>. In
+`pet/protocols/Craft.py`:
+
+``` python
+# support
+import pet
+
+# parts
+from .Instrument import Instrument
+
+# the platform that carries the mission instruments
+class Craft(pet.protocol, family="pet.craft"):
+    """
+    The craft requirements
+    """
+
+    # required state
+    instruments = pet.properties.list(schema=Instrument())
+    instruments.doc = "the list of instruments on this craft"
+
+# end of file
+```
+
+Just like <Protocol>Instrument</Protocol>, <Protocol>Craft</Protocol> derives from `pet.protocol`
+and has a family name. The new feature is the `instruments` class attribute. It is declared to be a
+list of <Protocol>Instrument</Protocol> instances and is now required state for all components that
+implement <Protocol>Craft</Protocol>. Non-conforming components are flagged at compile time, and
+their instances are not permitted to be members of `instruments`.
+
+<Protocol>Orbiter</Protocol> is a kind of <Protocol>Craft</Protocol>. In
+`pet/protocols/Orbiter.py`:
+
+``` python
+# superclass
+from .Craft import Craft
+
+# orbiters are craft
+class Orbiter(Craft, family="pet.craft.orbiters"):
+    """
+    Requirements for orbiters
+    """
+
+    # required state
+    naif = pet.properties.int()
+    naif.doc = "the optional NAIF code for this orbiter"
+
+# end of file
+```
+
+In addition to requiring its implementers to have a list of instruments, a requirement inherited
+from <Protocol>Craft</Protocol>, <Protocol>Orbiter</Protocol> specifies that its implementers must
+have an integer NAIF code, as understood by `spice`. The graphical equivalent of the two protocol
+declarations is:
+
+<Picture src="figures/protocols-craft.png" width="40%" />
+
+Note that the attribute names are followed by a shorthand that indicates their type.
+
+Finally, a <Protocol>Mission</Protocol> can now be defined as:
+
+<Picture src="figures/protocols-mission.png" width="25%" />
+
+You should be able to translate this diagram into the following code in
+`pet/protocols/Mission.py`:
+
+``` python
+# support
+import pet
+
+# parts
+from .Craft import Craft
+
+# the mission protocol
+class Mission(pet.protocol, family="pet.missions"):
+    """
+    The mission requirements
+    """
+
+    # required state
+    craft = pet.properties.list(schema=Craft())
+    craft.doc = "the constellation of craft that carry the mission instruments"
+
+# end of file
+```
+
+Earlier, we mentioned that <Protocol>Mission</Protocol> can be thought of as a kind of
+<Protocol>Observer</Protocol>, which would imply that <Protocol>Mission</Protocol> should be
+declared a subclass of <Protocol>Observer</Protocol>. We skipped this extra level of abstraction
+here, but we may have to revisit if we find ourselves having to refer to abstract observers in any
+part of our application.
+
+### <a name="design.nisar" />Implementing the NISAR mission components
+
+We are ready to start tackling the classes that implement these abstractions. First up, the
+<Component>NISAR</Component> mission, whose graphical representation is:
+
+<Picture src="figures/components-nisar-mission.png" width="75%" />
+
+<Component>NISAR</Component> is a component that implements <Protocol>Mission</Protocol>, a
+relationship that is denoted by the line with the ball on the end near the protocol. The
+<Component>NISAR</Component> family name is scoped within the family name of its protocol, a
+convention that simplifies component resolution, as we'll see later on. Note that the attribute
+`craft` is declared to be a list of <Protocol>Orbiter</Protocol>, rather than a list of
+<Protocol>Craft</Protocol> as specified by <Protocol>Mission</Protocol>. This is ok with <Pyre/>
+because <Protocol>Orbiter</Protocol> is a subclass of <Protocol>Craft</Protocol>, so the stated
+requirement is satisfied.
+
+The `craft` declaration also specifies an empty list as its default value. Instances of the
+<Component>NISAR</Component> mission will not have any orbiters unless configured otherwise. We
+explicitly avoid setting up the default as a list containing the actual NISAR
+<Component>Spacecraft</Component> so that we can detect whether the end user configured their
+mission instance with a list of orbiters. More on this later.
+
+The code for <Component>NISAR</Component> is in `pet/missions/nisar/NISAR.py`:
+
+``` python
+# support
+import pet
+
+# the NISAR mission
+class NISAR(pet.component, family="pet.missions.nisar", implements=pet.protocols.mission):
+    """
+    The NISAR mission
+    """
+
+    # user configurable state
+    craft = pet.properties.list(schema=pet.protocols.orbiter())
+    craft.default = []
+    craft.doc = "the constellation of craft that carry the mission instruments"
+
+# end of file
+```
+
+Note the new argument `implements` in the class declaration; it asks <Pyre/> to verify at compile
+time that <Component>NISAR</Component> implements <Protocol>Mission</Protocol> correctly.
+
+
+The NISAR <Component>Spacecraft</Component> component looks like this:
+
+<Picture src="figures/components-nisar-spacecraft.png" width="75%" />
+
+<Component>Spacecraft</Component> instances have a default `naif` code of `-198`, the value assigned
+to the NISAR orbiter by the `spice` kernels. Their `instruments` are expected to implement
+<Protocol>SAR</Protocol>, a requirement more stringent than <Protocol>Orbiter</Protocol> requires
+as a subclass of <Protocol>Craft</Protocol>.
+
+The implementation of the NISAR <Component>Spacecraft</Component> is in
+`pet/missions/nisar/Spacecraft.py`:
+
+``` python
+# support
+import pet
+
+# the NISAR spacecraft
+class Spacecraft(pet.component, family="pet.craft.orbiters.nisar", implements=pet.protocols.orbiter):
+    """
+    The NISAR spacecraft
+    """
+
+    # configurable state
+    # the NAIF code
+    naif = pet.properties.int()
+    naif.default = -198
+    naif.doc = "the NAIF id of the NISAR spacecraft"
+
+    # instruments carried by this spacecraft
+    instruments = pet.properties.list(schema=pet.protocols.sar())
+    instruments.default = []
+    instruments.doc = "the list of instruments carried by the NISAR spacecraft"
+
+# end of file
+```
+
+Finally, the <Component>NISAR</Component> instrument is given by:
+
+<Picture src="figures/components-nisar-instrument.png" width="75%" />
+
+It includes `modes`, a new trait that is not required by its protocol. This is supposed to capture
+the list of <Protocol>BeamMode</Protocol> modes that are available from the instrument configuration.
+We will have to add <Protocol>BeamMode</Protocol> to the `pet` protocols before implementing the
+<Component>NISAR</Component> component in `pet/instruments/NISAR.py`:
+
+``` python
+# support
+import pet
+
+# superclass
+from .Instrument import Instrument
+
+# the NISAR instrument
+class NISAR(Instrument, family="pet.instruments.nisar", implements=pet.protocols.sar):
+    """
+    The NISAR instrument
+    """
+
+    # user configurable state
+    # beam modes
+    modes = pet.properties.list(schema=pet.protocols.beam())
+    modes.default = []
+    modes.doc = "the list of beam modes supported by this instrument"
+
+# end of file
+```
+
+We have also added a base <Component>Instrument</Component> that derives from `pet.component` to
+simplify the implementation of instruments in `pet/instruments/Instrument.py`. The name collision
+between the protocol <Protocol>Instrument</Protocol> and the component
+<Component>Instrument</Component> will not cause us any trouble because these two are easy to
+differentiate from context. Besides, <Component>Instrument</Component> doesn't have a `family` name,
+as you can see below, so it is marked as an implementation detail not visible to the end user.
+
+``` python
+# support
+import pet
+
+# the base instrument
+class Instrument(pet.component, implements=pet.protocols.instrument):
+    """
+    The base instrument
+    """
+
+# end of file
+```
+
+The graphical representation of <Component>NISAR</Component> does not have to disclose that it has a
+base class other than `pet.component`. Note that <Component>NISAR</Component> must implement a
+protocol that is compatible with the protocol implemented by <Component>Instrument</Component>,
+otherwise <Pyre/> complains at compile time.
+
+For completeness, here is the code for <Protocol>BeamMode</Protocol> that lives in
+`pet/protocols/BeamMode.py`:
+
+``` python
+# support
+import pet
+
+# beam modes
+class BeamMode(pet.protocol, family="pet.instruments.sar.beams"):
+    """
+    Requirements for the beam mode of SAR instruments
+    """
+
+# end of file
+```
+
+### <a name="design.layout" />Package layout
+
+Let's assemble the physical layout of the `pet` python package so far.
+
+``` text
+pet
+  +- __init__.py
+  +- protocols
+  |    +- __init__.py
+  |    +- Mission.py
+  |    +- Craft.py
+  |    +- Orbiter.py
+  |    +- Instrument.py
+  |    +- SAR.py
+  |    +- BeamMode.py
+  +- instruments
+  |    +- __init__.py
+  |    +- Instrument.py
+  |    `- NISAR.py
+  `- missions
+       +- __init__.py
+       `- nisar
+            +- __init__.py
+            +- NISAR.py
+            `- Spacecraft.py
+```
+
+All directories within this layout require an `__init__.py` file in order to be importable by
+python. The file may be empty, but it must exist. However, these files provide an opportunity to
+control precisely what a submodule wants to publish. When python encounters `import pet`, it
+relies on the contents of the file `pet/__init__.py` to provide the list of accessible symbols.
+In order to tie some of the loose ends of the code we've seen so far, we need something like this
+
+``` python filename="pet/__init__.py"
+# pyre
+# component building blocks
+from pyre import protocol, component
+# for marking protocol and component interface
+from pyre import provides, export
+# for building an app
+from pyre import application
+
+# publish the submodules
+from . import protocols
+from . import instruments
+from . import missions
+
+# end of file
+```
+
+The `pet/protocols/__init__.py` file in turn exports
+
+``` python
+# instruments
+from .Instrument import Instrument as instrument
+from .BeamMode import BeamMode as beam
+from .SAR import SAR as sar
+
+# craft
+from .Craft import Craft as craft
+from .Orbiter import Orbiter as orbiter
+
+# missions
+from .Mission import Mission as mission
+
+# end of file
+```
+
+making it possible to use an expression like `pet.protocols.mission` when specifying the protocol
+implemented by the <Component>NISAR</Component> mission. The symbol renaming let's us hide the name
+of the class that contains the actual implementation behind some name that we publish to the package
+user. If we later decide to refactor this implementation, we can do so without disturbing users by
+merely providing a functional equivalent for the symbol that they rely on.
+
+Similarly, the `pet/instruments/__init__.py` provides access to the <Component>NISAR</Component>
+instrument constructor
+
+``` python
+# instrument foundries
+from .NISAR import NISAR as nisar
+
+# end of file
+```
+
+The `pet/missions/__init__.py` just pulls in the symbols from its subdirectory
+
+``` python
+# publish the known missions
+from .nisar import nisar
+
+# end of file
+```
+
+and relies on `pet/missions/nisar/__init__.py` to provide access to the mission constructor
+
+``` python
+# the mission foundry
+from .NISAR import NISAR as nisar
+
+# end of file
+```
+
+This layout now wires the expression `pet.missions.nisar(...)` straight through to the constructor
+of the <Component>NISAR</Component> mission component, and `pet.instruments.nisar(...)` to the
+corresponding instrument constructor.
+
+### <a name="design.reports" />Configuration reports
+
+Everything we have done so far is rather abstract. The protocols <Protocol>Mission</Protocol>,
+<Protocol>Craft</Protocol>, and <Protocol>Instrument</Protocol> enabled us to describe the
+relationships between our abstractions. The NISAR specific components we have built don't do very
+much just yet. We can start with something simple: let's add a method `report` to our components
+that just prints some identifying information. In the [next](#design.app) section, we will write a
+simple application that assembles a mission instance and just prints configuration information.
+
+This simple example is an excellent opportunity to introduce `journal`, a logging facility that
+comes with <Pyre/>. `journal` predates the `logging` module from the python standard library by a
+decade and half. It has some features that make it uniquely suitable for the kinds of application
+written by <Pyre/> users. This is not a comprehensive tutorial on how to use `journal` but we will
+see enough features to get an introduction to the basics.
+
+Let's start with <Component>Instrument</Component>, the base class of all instrument
+implementations. The implementation in `pet/instruments/Instrument.py` becomes:
+
+``` python
+# support
+import pet
+
+# the base instrument
+class Instrument(pet.component, implements=pet.protocols.instrument):
+    """
+    The base instrument
+    """
+
+    # interface
+    def report(self, channel):
+        """
+        Render my configuration to the given journal {channel}
+        """
+        # sign on
+        channel.line(f"{self}")
+        # all done
+        return
+
+# end of file
+```
+
+We can exercise the new capability from the python prompt:
+
+``` text
+~/dv/pet> python3
+>>> import pet
+>>> import journal
+>>> channel = journal.info(name="pet")
+>>> lBand = pet.instruments.nisar(name="L-band")
+>>> lBand.report(channel=channel)
+>>> channel.log()
+journal: component 'L-band', an instance of 'pet.instruments.nisar'
+```
+
+The first two lines give us access to the `pet` and `journal` packages. Then we build a `channel`
+of type `info` and instantiate a <Component>NISAR</Component> instrument. Configuring a component
+requires knowing its name. In complex applications with many components, it pays to come up with a
+consistent naming strategy to avoid accidental name collisions. After instantiation, we ask our
+component instance to `report` to our `channel` and then flush it. This produces the output shown.
+The <Component>NISAR</Component> instrument instance has access the method `report` of
+<Component>Instrument</Component> because it is one of its subclasses.
+
+Our <Component>NISAR</Component> instrument has beam `modes`. Let's add them to the `report`:
+
+``` python
+# support
+import pet
+
+# superclass
+from .Instrument import Instrument
+
+# the NISAR instrument
+class NISAR(Instrument, family="pet.instruments.nisar", implements=pet.protocols.sar):
+    """
+    The NISAR instrument
+    """
+
+    # user configurable state
+    # beam modes
+    modes = pet.properties.list(schema=pet.protocols.beam())
+    modes.default = []
+    modes.doc = "the list of beam modes supported by this instrument"
+
+    # interface
+    def report(self, channel):
+        """
+        Render my state in the given journal {channel}
+        """
+        # chain up
+        super().report(channel=channel)
+        # get my modes
+        modes = self.modes
+        # indent
+        channel.indent()
+        # report the mode count
+        channel.line(f"modes: {len(modes)}")
+        # outdent
+        channel.outdent()
+        # all done
+        return
+
+# end of file
+```
+
+ The implementation of `report` in <Component>NISAR</Component> starts by chaining up to the
+ `report` of <Component>Instrument</Component>, and then adds the number of beam modes to the
+ output. Repeating our last session at the python prompt gives:
+
+``` text
+~/dv/pet> python3
+>>> import pet
+>>> import journal
+>>> channel = journal.info(name="pet")
+>>> sBand = pet.instruments.nisar(name="s-band")
+>>> sband.report(channel=channel)
+>>> channel.log()
+journal:
+ -- component 's-band', an instance of 'pet.instruments.nisar'
+ --   modes: 0
+```
+
+We can add a similar capability to the NISAR <Component>Spacecraft</Component> in
+`pet/missions/nisar/Spacecraft.py`:
+
+``` python
+# support
+import pet
+
+# the NISAR spacecraft
+class Spacecraft(pet.component, family="pet.craft.orbiters.nisar", implements=pet.protocols.orbiter):
+    """
+    The NISAR spacecraft
+    """
+
+    # configurable state
+    # the NAIF code
+    naif = pet.properties.int()
+    naif.default = -198
+    naif.doc = "the NAIF id of the NISAR spacecraft"
+
+    # instruments carried by this spacecraft
+    instruments = pet.properties.list(schema=pet.protocols.sar())
+    instruments.default = []
+    instruments.doc = "the list of instruments carried by the NISAR spacecraft"
+
+    # interface
+    def report(self, channel):
+        """
+        Render my configuration in the given journal {channel}
+        """
+        # sign on
+        channel.line(f"{self}")
+        # indent
+        channel.indent()
+        # report my NAIf code
+        channel.line(f"NAIF id: {self.naif}")
+        # go through my instruments
+        for idx, instrument in enumerate(self.instruments):
+            # mark
+            channel.line(f"instrument {idx}:")
+            # indent
+            channel.indent()
+            # ask the instrument to report
+            instrument.report(channel=channel)
+            # outdent
+            channel.outdent()
+        # outdent
+        channel.outdent()
+        # all done
+        return
+
+# end of file
+```
+
+and to the <Component>NISAR</Component> mission in `pet/missions/nisar/NISAR.py`:
+
+``` python
+# support
+import pet
+
+# the NISAR mission
+class NISAR(pet.component, family="pet.missions.nisar", implements=pet.protocols.mission):
+    """
+    The NISAR mission
+    """
+
+    # user configurable state
+    craft = pet.properties.list(schema=pet.protocols.orbiter())
+    craft.default = []
+    craft.doc = "the constellation of craft that carry the mission instruments"
+
+    # interface
+    def report(self, channel):
+        """
+        Render my configuration in the given journal {channel}
+        """
+        # sign on
+        channel.line(f"{self}")
+        # indent
+        channel.indent()
+        # go through my craft
+        for idx, craft in enumerate(self.craft):
+            # mark
+            channel.line(f"craft {idx}:")
+            # indent
+            channel.indent()
+            # ask the craft to report
+            craft.report(channel=channel)
+            # and outdent
+            channel.outdent()
+        # outdent
+        channel.outdent()
+        # all done
+        return
+
+# end of file
+```
+
+By default, <Component>NISAR</Component> missions have an empty list of `craft`, and
+<Component>Spacecraft</Component> carry no `instruments`, so running these reports with the default
+configuration does not produce exciting output. We fix this in the next section, where we show how
+the end user can take control of mission construction.
+
+### <a name="design.app" />Assembling a concrete mission
+
+In this section, we will build and configure a simple mission application. We are assuming that you
+have been following along with the code changes and you have assembled a `pet` package with the
+layout shown in a [previous](#design.layout). Alternatively, if you already have `pet` installed
+and accessible by python, everything shown here will also work exactly the same.
+
+Go to some directory outside the `pet` source tree, say `~/tmp/pet`, and create a script
+`mission.py` with the following content:
+
+``` python
+#! /usr/bin/env python3
+
+# support
+import pet
+import journal
+
+# the app
+class MissionApp(pet.application, family="pet.apps.mission"):
+    """
+    A simple application to showcase mission configuration
+    """
+
+    # user configurable state
+    mission = pet.protocols.mission()
+    mission.doc = "the mission"
+
+    # application interface obligations
+    @pet.export
+    def main(self, *args, **kwds):
+        """
+        The main entry point
+        """
+        # get my mission
+        mission = self.mission
+        # if it's non-trivial
+        if mission:
+            # make a channel
+            channel = journal.info("pet.app")
+            # ask my mission to report its configuration
+            mission.report(channel=channel)
+            # and flush
+            channel.log()
+        # all done
+        return 0
+
+# bootstrap
+if __name__ == "__main__":
+    # instantiate the app
+    app = MissionApp(name="pet.app")
+    # launch it
+    status = app.run()
+    # and share its status with the shell
+    raise SystemExit(status)
+
+# end of file
+```
+
+The first line of the script tells the shell to execute using python. Let's give it execute
+permissions:
+
+``` text
+~/tmp/pet> chmod +x mission.py
+```
+
+You can now run this script. There should be no errors, but also not much output. That's because the
+default value for the application `mission` trait is `None`, and the logic in the `main` entry point
+skips past the report generation in that case.
+
+``` text
+~/tmp/pet> ./mission.py
+~/tmp/pet>
+```
+
+Our <Component>MissionApp</Component> is a <Component>pet.application</Component>, which itself is
+a component, so the lines that declare the `mission` trait should be familiar by now. One new
+feature here is the `@pet.export` decorator above the declaration of `main`. That's how you tell
+<Pyre/> that a given function is meant to satisfy some requirement imposed by the protocol a
+component implements. At the bottom of the script is the boilerplate code necessary to launch a
+python script. In our cases, we just instantiate the app, run it, and share its exit code with the
+shell.
+
+Subclasses of <Component>pet.application</Component> inherit a lot of behavior supplied by the
+<Pyre/> framework. An easy one to see is getting help running the app. Try:
+
+``` text
+~/tmp/pet> ./mission.py --help
+
+    A simple application to showcase mission configuration
+
+  usage:
+    pet.app [options]
+
+  options:
+    --mission: the mission [pet.missions]
+      --shell: my hosting strategy [pyre.shells]
+      --DEBUG: debugging mode [bool]
+```
+
+This simple help screen is generated automatically by our <Component>MissionApp</Component> through
+introspection, using its `docstring` as the application description, and going through its pile of
+traits to form the list of command line arguments understood by the app. As you may have guessed,
+there is a one to one correspondence between traits and command line arguments. More on this later.
+
+Building an interesting mission does not require any changes to our source code. It can all be done
+from a user supplied configuration file. Let's create `pet.yaml` in the same directory as
+`mission.py`.
+
+``` yaml
+# -*- yaml -*-
+
+# bind the application mission to a NISAR mission named "example"
+mission: nisar#example
+
+# the configuration of the example mission
+example:
+  # the list of spacecraft flown by the mission
+  craft:
+    - nisar#primary
+
+# the configuration of the primary spacecraft
+primary:
+  # the list of instruments carried by the craft
+  instruments:
+    - nisar#L-band
+    - nisar#S-band
+
+# end of file
+```
+
+Let's unpack what is going on. <Component>MissionApp</Component> has a `mission` trait. The
+assignment `mission: nisar#example` will assign to `mission` a component named `example` built with
+the `nisar` component factory. The long form for this is `mission: pet.missions.nisar#example`,
+but because the <Protocol>Mission</Protocol> family name is `pet.missions` and the layout of our
+package mirrors this structure, <Pyre/> seeds the search for the mission factory with
+`pet.missions.nisar` automatically. <Pyre/> imports this symbol, checks that it is a component
+factory and invokes it as if `mission = pet.missions.nisar(name="example")` were typed in a python
+session. Shorthands like this simplify what users have to type and it is one of the main reasons to
+lay out family names and the package directory structure in compatible ways.
+
+Similarly, the `example` mission configures its list of `craft` by supplying a `nisar#primary`
+specification, which sends <Pyre/> looking for a component that implements `pet.craft.orbiters`.
+The <Component>Spacecraft</Component> in `pet/missions/nisar` is known to be one such, and its
+family name is `pet.craft.orbiters.nisar`, so there is a match. <Pyre/> then instantiates the
+<Component>Spacecraft</Component>, giving it the name `primary`. During the instantiation, the
+configuration associated with `primary` is examined. It lists two `instruments`, both of type
+`nisar` but with different names. The resolution for components that implement
+<Protocol>Instrument</Protocol> discovers the <Component>NISAR</Component> instrument as
+`pet.instruments.nisar` and instantiates and configures the `L-band` and `S-band` instruments.
+
+It's worth noting that the conventions that helped <Pyre/> make these matches are just simplifying
+what the user has to type in the configuration file. Everything would have worked just fine by
+providing the full family names to the lists of craft and instruments.
+
+Running the `mission.py` script now produces
+
+``` text
+~/tmp/pet>./mission.py
+pet:
+ -- component 'example', an instance of 'pet.missions.nisar'
+ --   craft 0:
+ --     component 'primary', an instance of 'pet.craft.orbiters.nisar'
+ --       NAIF id: -198
+ --       instrument 0:
+ --         component 'L-band', an instance of 'pet.instruments.nisar'
+ --           modes: 0
+ --       instrument 1:
+ --         component 'S-band', an instance of 'pet.instruments.nisar'
+ --           modes: 0
+```
+
+Configuring a hypothetical NISAR mission where there is a companion craft carrying just an L-band
+instrument is fairly straightforward:
+
+``` yaml
+
+# bind the application mission to a NISAR mission named "example"
+mission: nisar#example
+
+# the configuration of the example mission
+example:
+  # the list of spacecraft flown by the mission
+  craft:
+    - nisar#primary
+    - nisar#secondary
+
+# the configuration of the primary spacecraft
+primary:
+  # the list of instruments carried by the craft
+  instruments:
+    - nisar#L-band
+    - nisar#S-band
+
+# the configuration of the secondary spacecraft
+secondary:
+  # the NAIF id of this craft
+  naif: -199
+  # the list of instruments carried by the craft
+  instruments:
+    - nisar#L-band
+
+
+ # end of file
+ ```
+
+The list of `craft` now mentions the `secondary` orbiter, which has a unique NAIF code so we can
+specify its orbits and carries a single L-band instrument. Running `mission.py` with the new
+configuration yields:
+
+``` text
+pet:
+ -- component 'example', an instance of 'pet.missions.nisar'
+ --   craft 0:
+ --     component 'primary', an instance of 'pet.craft.orbiters.nisar'
+ --       NAIF id: -198
+ --       instrument 0:
+ --         component 'L-band', an instance of 'pet.instruments.nisar'
+ --           modes: 0
+ --       instrument 1:
+ --         component 'S-band', an instance of 'pet.instruments.nisar'
+ --           modes: 0
+ --   craft 1:
+ --     component 'secondary', an instance of 'pet.craft.orbiters.nisar'
+ --       NAIF id: -199
+ --       instrument 0:
+ --         component 'L-band', an instance of 'pet.instruments.nisar'
+ --           modes: 0
+```
+
+
+{/* end of file */}

@@ -1,0 +1,44 @@
+// -*- c++ -*-
+// -*- coding: utf-8 -*-
+//
+// michael a.g. aïvázis <michael.aivazis@para-sim.com>
+// (c) 1998-2025 all rights reserved
+
+// code guard
+#pragma once
+
+// support
+#include <tuple>
+#include <string>
+
+
+// put all version related symbols in their own namespace
+// N.B.: version information is made available two different ways in order to enable detecting
+// inconsistencies between the headers accessible at compile time and the library available
+// at run time
+namespace pet::version {
+    // type aliases
+    using string_t = std::string;
+
+    // my version is a struct with three integers and the {git} hash
+    struct version_t {
+        int major;
+        int minor;
+        int micro;
+        string_t revision;
+    };
+
+    // the version of the {pet} library
+    auto version() -> version_t;
+
+    // the version visible through the headers
+    // clang-format off
+    const int major = @MAJOR@;
+    const int minor = @MINOR@;
+    const int micro = @MICRO@;
+    const string_t revision = "@REVISION@";
+    // clang-format on
+} // namespace pet::version
+
+
+// end of file

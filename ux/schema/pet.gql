@@ -1,0 +1,56 @@
+# -*- graphql -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+schema {
+  query: Query
+  # mutation: Mutation
+}
+
+
+# the top level query
+type Query {
+  # server version information
+  version: Version!
+
+  # the pet session
+  pet: PET!
+}
+
+
+# the pet session
+type PET implements Node {
+  # the id
+  id: ID!
+}
+
+
+# server version
+type Version {
+  major: Int!
+  minor: Int!
+  micro: Int!
+  revision: String!
+}
+
+
+# interfaces
+# the node interface
+interface Node {
+  # the node relay id
+  id: ID!
+}
+
+
+# boilerplate for connections
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+
+# end of file
