@@ -1,4 +1,4 @@
-# Planet exploration twin
+# Planetary exploration twin
 
 ## Getting started
 
@@ -313,8 +313,4 @@ shell.auto: yes
 Settings from a `pet.yaml` in the current working directory override these global defaults, so you
 have complete control over how the application behaves by creating local configuration files next
 to your data. More details about application configuration, both from the command line and from
-within configuration files can be found in the section on [configuring](#mm) the app.
-
-You are now ready to move on to the next section that will walk through the various application
-features.
-
+within configuration files can be found in the section on configuring the app.
