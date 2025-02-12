@@ -15,6 +15,10 @@ pet.webpack := pet.ux
 # and some tests
 pet.tests := pet.lib.tests pet.ext.tests pet.pkg.tests
 
+# docker images
+pet.docker-images := \
+  pet.dev.noble-gcc pet.dev.noble-clang
+
 
 # load the packages
 include $(pet.packages)
@@ -24,8 +28,10 @@ include $(pet.libraries)
 include $(pet.extensions)
 # the ux
 include $(pet.webpack)
-# and the test suites
+# the test suites
 include $(pet.tests)
+# and the docker images
+include ${pet.docker-images}
 
 
 # end of file
