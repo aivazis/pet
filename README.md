@@ -96,7 +96,7 @@ Alternatively, you can use the `https` protocol for anonymous access:
 
 You can probably get away with installing `pyre` from `conda-forge`, but `pet` and `pyre` are
 currently evolving together rather quickly. Being tied to a slower release cycle may delay access to
-the latest features. Generally peting, the `HEAD` of all three repositories is a safe place to
+the latest features. Generally speaking, the `HEAD` of all three repositories is a safe place to
 pull from, as they are thoroughly tested.
 
 ### Setting up the build system
