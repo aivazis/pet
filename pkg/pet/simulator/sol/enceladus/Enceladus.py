@@ -17,5 +17,14 @@ class Enceladus(
     A model for Enceladus
     """
 
+    # user configurable state
+    name = pet.properties.str()
+    name.default = "ENCELADUS"
+    name.doc = "the canonical NAIF name for enceladus"
+
+    naif = pet.properties.str()
+    naif.default = 602
+    naif.doc = "the NAIF code for enceladus"
+
 
 # end of file

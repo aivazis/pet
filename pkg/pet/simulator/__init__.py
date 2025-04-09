@@ -6,8 +6,8 @@
 
 
 # parts
-from . import craft
 from . import sol
+from . import craft
 from . import instruments
 
 
