@@ -8,15 +8,22 @@
 # support
 import pet
 
+# my part
+from .Mode import Mode
 
-# the base instrument
-class Instrument(pet.component, implements=pet.protocols.instruments.instrument):
+
+# the instrument protocol
+class Instrument(
+    pet.component,
+    family="pet.instruments.base",
+    implements=pet.protocols.instruments.instrument,
+):
     """
-    The base instrument
+    The instrument requirements
     """
 
     # required state
-    modes = pet.properties.list(schema=pet.protocols.instruments.mode())
+    modes = pet.properties.list(schema=Mode())
     modes.doc = "the list of beam modes supported by this instrument"
 
     # interface
@@ -27,6 +34,14 @@ class Instrument(pet.component, implements=pet.protocols.instruments.instrument)
         """
         # sign on
         channel.line(f"{self}")
+        # get my modes
+        modes = self.modes
+        # indent
+        channel.indent()
+        # report the mode count
+        channel.line(f"modes: {len(modes)}")
+        # outdent
+        channel.outdent()
         # all done
         return
 

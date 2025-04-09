@@ -5,8 +5,15 @@
 # (c) 1998-2025 all rights reserved
 
 
-# instrument foundries
+# the base instrument
 from .Instrument import Instrument as instrument
+
+# other instrument types
+from .Altimeter import Altimeter as altimeter
+from .Imager import Imager as imager
+from .Magnetometer import Magnetometer as magnetometer
+from .Radiometer import Radiometer as radiometer
+from .SAR import SAR as sar
 
 
 # end of file
