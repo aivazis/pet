@@ -21,7 +21,7 @@ class NISAR(
     """
 
     # user configurable state
-    craft = pet.properties.list(schema=pet.protocols.orbiter())
+    craft = pet.properties.list(schema=pet.protocols.craft.orbiter())
     craft.default = []
     craft.doc = "the constellation of craft that carry the mission instruments"
 

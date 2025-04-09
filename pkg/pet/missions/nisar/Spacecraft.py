@@ -13,7 +13,7 @@ import pet
 class Spacecraft(
     pet.component,
     family="pet.craft.orbiters.nisar",
-    implements=pet.protocols.orbiter,
+    implements=pet.protocols.craft.orbiter,
 ):
     """
     The NISAR spacecraft
