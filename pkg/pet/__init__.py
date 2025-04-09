@@ -19,6 +19,8 @@ from pyre import (
     provides,
     # the manager of the pyre runtime
     executive,
+    # memory
+    memory,
     # support for concurrency
     nexus,
     # support for workflows, products, and factories
@@ -28,6 +30,7 @@ from pyre import (
     plexus,
     # miscellaneous
     primitives,
+    timers,
     tracking,
     units,
     weaver,
