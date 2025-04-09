@@ -55,9 +55,7 @@ from .ext import libpet
 from . import protocols
 
 # parts
-from . import craft
-from . import sol
-from . import instruments
+from . import simulator
 from . import missions
 
 # schema
