@@ -9,7 +9,7 @@
 import pet
 
 # my parts
-from . import instruments
+from .. import instruments
 
 
 # the platform that carries the mission instruments

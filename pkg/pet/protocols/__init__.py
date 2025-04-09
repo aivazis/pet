@@ -7,14 +7,11 @@
 
 # basic concepts
 from . import instruments
+from . import craft
 
 # planetary objects
 from .Body import Body as body
 from .Shape import Shape as shape
-
-# observers
-from .Craft import Craft as craft
-from .Orbiter import Orbiter as orbiter
 
 # observations
 from .Observation import Observation as observation
