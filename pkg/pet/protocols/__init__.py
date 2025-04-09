@@ -5,6 +5,9 @@
 # (c) 1998-2025 all rights reserved
 
 
+# basic concepts
+from . import instruments
+
 # planetary objects
 from .Body import Body as body
 from .Shape import Shape as shape
@@ -12,9 +15,6 @@ from .Shape import Shape as shape
 # observers
 from .Craft import Craft as craft
 from .Orbiter import Orbiter as orbiter
-from .Instrument import Instrument as instrument
-from .BeamMode import BeamMode as beam
-from .SAR import SAR as sar
 
 # observations
 from .Observation import Observation as observation

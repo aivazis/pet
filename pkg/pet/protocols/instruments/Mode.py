@@ -10,9 +10,9 @@ import pet
 
 
 # requirements for the SAR beam mode
-class BeamMode(pet.protocol, family="pet.instruments.sar.beams"):
+class Mode(pet.protocol, family="pet.instruments.modes"):
     """
-    Requirements for the beam mode of SAR instruments
+    Requirements for instrument modes
     """
 
 

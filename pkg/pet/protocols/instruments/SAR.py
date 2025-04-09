@@ -8,11 +8,14 @@
 # support
 import pet
 
+# superclass
+from .Instrument import Instrument
+
 
 # the instrument protocol
-class Instrument(pet.protocol, family="pet.instruments"):
+class SAR(Instrument, family="pet.instruments.sar"):
     """
-    The instrument requirements
+    Requirements for synthetic aperture radar instruments
     """
 
 

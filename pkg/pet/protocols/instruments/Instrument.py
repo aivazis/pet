@@ -8,21 +8,18 @@
 # support
 import pet
 
-# superclass
-from .Instrument import Instrument
-
-# my parts
-from .BeamMode import BeamMode
+# my part
+from .Mode import Mode
 
 
 # the instrument protocol
-class SAR(Instrument, family="pet.instruments.sar"):
+class Instrument(pet.protocol, family="pet.instruments"):
     """
-    Requirements for synthetic aperture radar instruments
+    The instrument requirements
     """
 
     # required state
-    modes = pet.properties.list(schema=BeamMode())
+    modes = pet.properties.list(schema=Mode())
     modes.doc = "the list of beam modes supported by this instrument"
 
 
