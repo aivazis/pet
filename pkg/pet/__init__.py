@@ -14,6 +14,7 @@ from pyre import (
     protocol,
     component,
     foundry,
+    descriptors,
     # decorators
     export,
     provides,
