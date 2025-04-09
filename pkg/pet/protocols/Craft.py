@@ -9,7 +9,7 @@
 import pet
 
 # my parts
-from .Instrument import Instrument
+from . import instruments
 
 
 # the platform that carries the mission instruments
@@ -19,7 +19,7 @@ class Craft(pet.protocol, family="pet.craft"):
     """
 
     # required state
-    instruments = pet.properties.list(schema=Instrument())
+    instruments = pet.properties.list(schema=instruments.instrument())
     instruments.doc = "the list of instruments on this craft"
 
 

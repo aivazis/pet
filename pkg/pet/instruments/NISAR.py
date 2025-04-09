@@ -14,7 +14,7 @@ from .Instrument import Instrument
 
 # the NISAR instrument
 class NISAR(
-    Instrument, family="pet.instruments.nisar", implements=pet.protocols.sar
+    Instrument, family="pet.instruments.nisar", implements=pet.protocols.instruments.sar
 ):
     """
     The NISAR instrument
@@ -22,7 +22,7 @@ class NISAR(
 
     # user configurable state
     # beam modes
-    modes = pet.properties.list(schema=pet.protocols.beam())
+    modes = pet.properties.list(schema=pet.protocols.instruments.mode())
     modes.default = []
     modes.doc = "the list of beam modes supported by this instrument"
 
