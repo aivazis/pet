@@ -8,6 +8,9 @@
 # support
 import pet
 
+# my parts
+from .SAR import SAR
+
 
 # the NISAR spacecraft
 class Spacecraft(
@@ -67,7 +70,7 @@ class Spacecraft(
         # if the list is empty
         if not instruments:
             # the user has not expressed any opinions, so build the default instrument
-            instrument = pet.instruments.nisar(name=f"{self.pyre_name}.instrument")
+            instrument = SAR(name=f"{self.pyre_name}.lsar")
             # put it in a list and attach it to this spacecraft
             self.instruments = [instrument]
         # all done; chain up
