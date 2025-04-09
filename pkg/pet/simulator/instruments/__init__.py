@@ -6,7 +6,7 @@
 
 
 # instrument foundries
-from .NISAR import NISAR as nisar
+from .Instrument import Instrument as instrument
 
 
 # end of file
