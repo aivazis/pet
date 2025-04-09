@@ -1,0 +1,25 @@
+# -*- pyre -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+# overall application configuration
+pet.app:
+  # the shell controls the user interface
+  # set to {script} for command line use, or to {web} to launch the web app
+  shell: web
+
+  # when running as a web app, listen for web connections
+  nexus.services.web:
+    # at some port in user space; if you drop the port number, pet will choose one for you
+    address: ip4:0.0.0.0:8006
+
+
+# configure the web shell
+pyre.shells.web#pet.app.shell:
+  # spawn a new browser on every app launch
+  auto: yes
+
+
+# end of file
