@@ -55,6 +55,7 @@ from .ext import libpet
 from . import protocols
 
 # parts
+from . import data
 from . import simulator
 from . import missions
 
