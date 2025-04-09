@@ -21,10 +21,9 @@ class NISAR(
     """
 
     # user configurable state
-    # beam modes
     modes = pet.properties.list(schema=pet.protocols.instruments.mode())
     modes.default = []
-    modes.doc = "the list of beam modes supported by this instrument"
+    modes.doc = "the list of beam modes supported by the NISAR instrument"
 
     # interface
     @pet.export
