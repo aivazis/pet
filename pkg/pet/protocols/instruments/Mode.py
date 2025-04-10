@@ -9,7 +9,7 @@
 import pet
 
 
-# requirements for the SAR beam mode
+# requirements for instrument modes of operation
 class Mode(pet.protocol, family="pet.instruments.modes"):
     """
     Requirements for instrument modes

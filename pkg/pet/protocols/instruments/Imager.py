@@ -12,7 +12,7 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the imager protocol
 class Imager(Instrument, family="pet.instruments.imagers"):
     """
     Requirements for imagers
