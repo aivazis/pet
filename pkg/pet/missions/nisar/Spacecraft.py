@@ -29,7 +29,7 @@ class Spacecraft(
     naif.doc = "the NAIF id of the NISAR spacecraft"
 
     # instruments carried by this spacecraft
-    instruments = pet.properties.list(schema=pet.protocols.instruments.sar())
+    instruments = pet.properties.list(schema=pet.protocols.instruments.radar.sar())
     instruments.default = []
     instruments.doc = "the list of instruments carried by the NISAR spacecraft"
 
