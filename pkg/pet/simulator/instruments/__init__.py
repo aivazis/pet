@@ -5,6 +5,9 @@
 # (c) 1998-2025 all rights reserved
 
 
+# instrument modes
+from . import modes
+
 # the base instrument
 from .Instrument import Instrument as instrument
 
