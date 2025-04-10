@@ -19,6 +19,9 @@ class Instrument(pet.protocol, family="pet.instruments"):
     """
 
     # required state
+    mode = Mode()
+    mode.doc = "the current mode of the instrument"
+
     modes = pet.properties.list(schema=Mode())
     modes.doc = "the list of beam modes supported by this instrument"
 
