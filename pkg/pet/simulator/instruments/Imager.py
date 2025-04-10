@@ -12,14 +12,14 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the base class for the implementation of imaging instruments
 class Imager(
     Instrument,
     family="pet.instruments.imagers.base",
     implements=pet.protocols.instruments.imager,
 ):
     """
-    Requirements for imagers
+    The base class for imaging instruments
     """
 
 

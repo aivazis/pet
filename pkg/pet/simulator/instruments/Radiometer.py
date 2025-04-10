@@ -12,14 +12,14 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the base class for radiometer implementations
 class Radiometer(
     Instrument,
     family="pet.instruments.radiometers.base",
     implements=pet.protocols.instruments.radiometer,
 ):
     """
-    Requirements for radiometers
+    The base class for radiometer implementations
     """
 
 

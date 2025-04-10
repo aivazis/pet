@@ -12,14 +12,14 @@ import pet
 from .Mode import Mode
 
 
-# the instrument protocol
+# the base class for instruments
 class Instrument(
     pet.component,
     family="pet.instruments.base",
     implements=pet.protocols.instruments.instrument,
 ):
     """
-    The instrument requirements
+    The base class for all instruments
     """
 
     # required state

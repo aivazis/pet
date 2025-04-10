@@ -10,7 +10,11 @@ import pet
 
 
 # requirements for the SAR beam mode
-class Mode(pet.component, family="pet.instruments.modes.base"):
+class Mode(
+    pet.component,
+    family="pet.instruments.modes.base",
+    implements=pet.protocols.instruments.mode,
+):
     """
     The base operational mode for all instrument types
     """
