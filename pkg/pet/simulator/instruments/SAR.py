@@ -9,17 +9,17 @@
 import pet
 
 # superclass
-from .Instrument import Instrument
+from .Imager import Imager
 
 
-# the base SAR instrument
+# the base class for SAR instrument implementations
 class SAR(
-    Instrument,
+    Imager,
     family="pet.instruments.sar.base",
     implements=pet.protocols.instruments.sar,
 ):
     """
-    The base SAR instrument
+    The base class for SAR instrument implementations
     """
 
 
