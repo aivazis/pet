@@ -11,12 +11,22 @@ import pet
 # superclass
 from ..Imager import Imager
 
+# parts
+from .PhaseCenter import PhaseCenter
+
 
 # the synthetic aperture radar protocol
 class SAR(Imager, family="pet.instruments.radar.sar"):
     """
     Requirements for synthetic aperture radar instruments
     """
+
+    # phase centers
+    receivers = pet.properties.tuple(schema=PhaseCenter())
+    receivers.doc = "the collection of echo receivers"
+
+    transmitters = pet.properties.tuple(schema=PhaseCenter())
+    receivers.doc = "the collection of pulse transmitters"
 
 
 # end of file
