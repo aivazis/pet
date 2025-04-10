@@ -8,8 +8,8 @@
 # support
 import pet
 
-# my part
-from .Mode import Mode
+# get the basic modes
+from . import modes
 
 
 # the base class for instruments
@@ -23,7 +23,12 @@ class Instrument(
     """
 
     # required state
-    modes = pet.properties.list(schema=Mode())
+    mode = pet.protocols.instruments.mode()
+    mode.default = modes.off()
+    mode.doc = "the current instrument mode"
+
+    modes = pet.properties.list(schema=pet.protocols.instruments.mode())
+    modes.default = [mode.default]
     modes.doc = "the list of beam modes supported by this instrument"
 
     # interface
@@ -38,8 +43,10 @@ class Instrument(
         modes = self.modes
         # indent
         channel.indent()
+        # report the current mode
+        channel.line(f"mode: {self.mode}")
         # report the mode count
-        channel.line(f"modes: {len(modes)}")
+        channel.line(f"supported modes: {len(modes)}")
         # outdent
         channel.outdent()
         # all done
