@@ -12,7 +12,7 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the magnetometer protocol
 class Magnetometer(Instrument, family="pet.instruments.magnetometers"):
     """
     Requirements for magnetometers

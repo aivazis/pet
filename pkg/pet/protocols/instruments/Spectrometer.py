@@ -12,7 +12,7 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the spectrometer protocol
 class Spectrometer(Instrument, family="pet.instruments.spectrometers"):
     """
     Requirements for spectrometers

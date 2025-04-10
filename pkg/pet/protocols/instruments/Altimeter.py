@@ -12,7 +12,7 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the altimeter protocol
 class Altimeter(Instrument, family="pet.instruments.altimeters"):
     """
     Requirements for altimeters

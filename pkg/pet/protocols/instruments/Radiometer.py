@@ -12,7 +12,7 @@ import pet
 from .Instrument import Instrument
 
 
-# the instrument protocol
+# the radiometer protocol
 class Radiometer(Instrument, family="pet.instruments.radiometers"):
     """
     Requirements for radiometers
