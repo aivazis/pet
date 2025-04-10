@@ -9,13 +9,13 @@
 import pet
 
 # superclass
-from ..Imager import Imager
+from .SAR import SAR
 
 
-# the synthetic aperture radar protocol
-class SAR(Imager, family="pet.instruments.radar.sar"):
+# the polarimetric SAR protocol
+class PolarimetricSAR(SAR, family="pet.instruments.radar.polarimetricSAR"):
     """
-    Requirements for synthetic aperture radar instruments
+    Requirements for polarimetric SAR instruments
     """
 
 
