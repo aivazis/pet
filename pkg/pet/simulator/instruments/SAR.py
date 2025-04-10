@@ -22,5 +22,16 @@ class SAR(
     The base class for SAR instrument implementations
     """
 
+    # phase centers
+    receivers = pet.properties.tuple(
+        schema=pet.protocols.instruments.radar.phaseCenter()
+    )
+    receivers.doc = "the collection of echo receivers"
+
+    transmitters = pet.properties.tuple(
+        schema=pet.protocols.instruments.radar.phaseCenter()
+    )
+    receivers.doc = "the collection of pulse transmitters"
+
 
 # end of file
