@@ -17,7 +17,7 @@ class SAR(pet.simulator.instruments.sar, family="pet.missions.nisar.sar"):
 
     # user configurable state
     modes = pet.properties.list(schema=pet.protocols.instruments.mode())
-    modes.default = []
+    modes.default = [pet.simulator.instruments.sar.mode]
     modes.doc = "the list of beam modes supported by the NISAR instrument"
 
 
