@@ -12,6 +12,8 @@ from . import instruments
 from . import ground
 from . import control
 from . import telemetry
+from . import ops
+from . import mission
 
 
 # end of file
