@@ -9,7 +9,7 @@
 # planets
 from .earth import earth
 
-# moon
+# moons
 from .enceladus import enceladus
 
 
