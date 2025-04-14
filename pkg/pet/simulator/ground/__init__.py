@@ -5,12 +5,4 @@
 # (c) 1998-2025 all rights reserved
 
 
-# parts
-from . import sol
-from . import craft
-from . import instruments
-from . import ground
-from . import telemetry
-
-
 # end of file
