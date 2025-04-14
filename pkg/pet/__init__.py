@@ -5,6 +5,27 @@
 # (c) 1998-2025 all rights reserved
 
 
+"""
+Contents:
+
+  support for building the app:
+    ext: home of the importable runtime assets that are the python bindings of low level code
+    shells: support for application hosting strategies;
+    cli: the command line interface
+    ux: the client side of the graphical user interface (javascript, html, css, graphics, ...)
+    gql: the server side of the app interface; uses graphql to expose the app state to clients
+
+  protocols: the abstractions that define the capabilities of the package
+  data: the supported data product formats, their readers and writers
+  physics: the various science codes that model the physical processes observed by missions
+  simulator: implementation of he mission simulation engine
+  missions: planned or as-flown mission specifications, assembled from simulator parts
+  performance: mission performance assessment
+  accountants: the various mission "cost" assessors
+  adjudicators: home of the mission optimizers
+"""
+
+
 # import and publish pyre symbols
 from pyre import (
     # protocols, components, traits, and their infrastructure
@@ -55,18 +76,20 @@ from .ext import libpet
 # protocols
 from . import protocols
 
-# parts
-from . import data
-from . import simulator
-from . import missions
-
-# schema
+# interfaces
 from . import gql
-
-# user interfaces
 from . import shells  # the supported application shells
 from . import cli  # the command line interface
 from . import ux  # support for the web client
+
+# parts
+from . import data
+from . import physics
+from . import simulator
+from . import missions
+from . import performance
+from . import accountants
+from . import adjudicators
 
 # by convention
 __version__ = meta.version
