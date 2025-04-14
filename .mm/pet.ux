@@ -8,7 +8,7 @@
 # its path relative to the project
 pet.ux.root := ux/
 # static assets
-pet.ux.static := fonts figures graphics styles
+pet.ux.static := data fonts figures graphics styles
 # code chunks from external dependencies
 pet.ux.chunks := vendors-node_modules node_modules
 
