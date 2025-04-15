@@ -10,5 +10,7 @@ from .Product import Product as product
 from .Reader import Reader as reader
 from .Writer import Writer as writer
 
+from .Observable import Observable as observable
+
 
 # end of file
