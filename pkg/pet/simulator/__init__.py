@@ -14,6 +14,7 @@ from . import control
 from . import telemetry
 from . import ops
 from . import mission
+from . import physics
 
 
 # end of file
