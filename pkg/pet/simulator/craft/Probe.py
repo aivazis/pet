@@ -9,12 +9,12 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # the base mission craft
 class Probe(
-    Craft, family="pet.craft.probes.base", implements=pet.protocols.craft.probe
+    Spacecraft, family="pet.craft.probes.base", implements=pet.protocols.craft.probe
 ):
     """
     A base probe

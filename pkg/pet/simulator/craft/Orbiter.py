@@ -9,12 +9,12 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # the base mission craft
 class Orbiter(
-    Craft, family="pet.craft.orbiters.base", implements=pet.protocols.craft.orbiter
+    Spacecraft, family="pet.craft.orbiters.base", implements=pet.protocols.craft.orbiter
 ):
     """
     A base orbiter

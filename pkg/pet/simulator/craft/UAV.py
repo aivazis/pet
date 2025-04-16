@@ -8,16 +8,15 @@
 # support
 import pet
 
+
 # superclass
-from .Spacecraft import Spacecraft
+from .Craft import Craft
 
 
-# the base flyby
-class Flyby(
-    Spacecraft, family="pet.craft.flyby.base", implements=pet.protocols.craft.flyby
-):
+# the base UAV implementation
+class UAV(Craft, family="pet.craft.uav.base", implements=pet.protocols.craft.uav):
     """
-    A base flyby craft
+    Base class for all UAV implementations
     """
 
 

@@ -8,11 +8,15 @@
 # base craft
 from .Craft import Craft as craft
 
-# craft types
+# spacecraft
+from .Spacecraft import Spacecraft as spacecraft
 from .Flyby import Flyby as flyby
 from .Lander import Lander as lander
 from .Orbiter import Orbiter as orbiter
 from .Probe import Probe as probe
+
+# others
+from .UAV import UAV as uav
 
 
 # end of file

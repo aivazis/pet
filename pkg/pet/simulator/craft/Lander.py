@@ -9,12 +9,12 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # the base lander
 class Lander(
-    Craft, family="pet.craft.landers.base", implements=pet.protocols.craft.lander
+    Spacecraft, family="pet.craft.landers.base", implements=pet.protocols.craft.lander
 ):
     """
     A base lander
