@@ -9,11 +9,11 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # flyby spacecraft are craft
-class Flyby(Craft, family="pet.craft.flyby"):
+class Flyby(Spacecraft, family="pet.craft.flyby"):
     """
     The requirements for spacecraft that fly by a body
     """

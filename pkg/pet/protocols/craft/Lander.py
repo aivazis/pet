@@ -9,11 +9,11 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # landers are craft
-class Lander(Craft, family="pet.craft.landers"):
+class Lander(Spacecraft, family="pet.craft.landers"):
     """
     The requirements for spacecraft can land
     """

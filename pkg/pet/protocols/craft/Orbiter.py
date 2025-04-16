@@ -9,11 +9,11 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
 # orbiters are craft
-class Orbiter(Craft, family="pet.craft.orbiters"):
+class Orbiter(Spacecraft, family="pet.craft.orbiters"):
     """
     The orbiter requirements
     """
