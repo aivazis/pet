@@ -7,7 +7,7 @@
 # the testsuite for the pet package
 pet.pkg.tests.stem := pet.pkg
 # depends on
-pet.pkg.tests.prerequisites := pet.pkg
+pet.pkg.tests.prerequisites := pet.pkg pet.ext
 
 
 # end of file
