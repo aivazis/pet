@@ -6,7 +6,7 @@
 
 
 """
-Sanity check: verify that the {pet} package is accessible
+Assemble a simple mission
 """
 
 
