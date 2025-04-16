@@ -835,16 +835,16 @@ session. Shorthands like this simplify what users have to type and it is one of 
 lay out family names and the package directory structure in compatible ways.
 
 Similarly, the `example` mission configures its list of `craft` by supplying a `nisar#primary`
-specification, which sends <Pyre/> looking for a component that implements `pet.craft.orbiters`.
-The <Component>Spacecraft</Component> in `pet/missions/nisar` is known to be one such, and its
-family name is `pet.craft.orbiters.nisar`, so there is a match. <Pyre/> then instantiates the
+specification, which sends <Pyre/> looking for a component that implements `pet.craft.orbiters`. The
+<Component>Spacecraft</Component> in `pet/missions/nisar` is known to be one such, and its family
+name is `pet.craft.orbiters.nisar`, so there is a match. <Pyre/> then instantiates the
 <Component>Spacecraft</Component>, giving it the name `primary`. During the instantiation, the
 configuration associated with `primary` is examined. It lists two `instruments`, both of type
-`nisar` but with different names. The resolution for components that implement
+`nisar` but with different names. The resolution  mechanism for components that implement
 <Protocol>Instrument</Protocol> discovers the <Component>NISAR</Component> instrument as
 `pet.instruments.nisar` and instantiates and configures the `L-band` and `S-band` instruments.
 
-It's worth noting that the conventions that helped <Pyre/> make these matches are just simplifying
+It's worth noting that the conventions that helped <Pyre/> make these matches are only simplifying
 what the user has to type in the configuration file. Everything would have worked just fine by
 providing the full family names to the lists of craft and instruments.
 
