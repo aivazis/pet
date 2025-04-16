@@ -10,7 +10,12 @@ The home of the connection between instrument measurements and code predictions
 """
 
 # publish
-from . import observables
+# the base observable
+from .Observable import Observable as observable
+
+# and various types
+from .Displacement import Displacement as displacement
+from .SLC import SLC as slc
 
 
 # end of file
