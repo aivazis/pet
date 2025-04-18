@@ -14,7 +14,9 @@ from .Spacecraft import Spacecraft
 
 # the NISAR mission
 class NISAR(
-    pet.component, family="pet.missions.nisar", implements=pet.protocols.mission
+    pet.component,
+    family="pet.missions.nisar",
+    implements=pet.protocols.missions.mission,
 ):
     """
     The NISAR mission
