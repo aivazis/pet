@@ -8,8 +8,9 @@
 # support
 import pet
 
-# my parts
-from .craft import craft
+
+# parts
+from .. import craft
 
 
 # the mission protocol
@@ -19,7 +20,7 @@ class Mission(pet.protocol, family="pet.missions"):
     """
 
     # required state
-    craft = pet.properties.list(schema=craft())
+    craft = pet.properties.list(schema=craft.craft())
     craft.doc = "the constellation of craft that carry the mission instruments"
 
 
