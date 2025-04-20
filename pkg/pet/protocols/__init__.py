@@ -12,6 +12,7 @@ from . import data
 from . import instruments
 from . import craft
 from . import missions
+from . import ops
 
 # higher level entities
 from . import accountants
