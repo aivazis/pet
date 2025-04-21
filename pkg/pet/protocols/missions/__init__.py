@@ -7,7 +7,6 @@
 
 # publish
 from .Mission import Mission as mission
-from .Observation import Observation as observation
 
 
 # end of file
