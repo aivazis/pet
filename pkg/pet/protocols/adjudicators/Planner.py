@@ -32,5 +32,12 @@ class Planner(pet.protocol, family="pet.adjudicators.planners"):
     dt = pet.properties.dimensional()
     dt.doc = "the sampling "
 
+    # interface obligations
+    @pet.provides
+    def plan(self):
+        """
+        Generate the mission plan
+        """
+
 
 # end of file
