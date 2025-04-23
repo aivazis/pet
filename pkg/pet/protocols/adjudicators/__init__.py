@@ -6,6 +6,7 @@
 
 
 # publish
+from .Objective import Objective as objective
 from .Planner import Planner as planner
 
 
