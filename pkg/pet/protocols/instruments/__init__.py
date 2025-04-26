@@ -5,11 +5,12 @@
 # (c) 1998-2025 all rights reserved
 
 
-# the base instrument protocol
-from .Instrument import Instrument as instrument
-
 # instrument operations
 from .Mode import Mode as mode
+from .Controller import Controller as controller
+
+# the base instrument protocol
+from .Instrument import Instrument as instrument
 
 # instrument types
 from .Altimeter import Altimeter as altimeter

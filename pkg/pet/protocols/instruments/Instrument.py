@@ -8,8 +8,8 @@
 # support
 import pet
 
-# my part
-from .Mode import Mode
+# my parts
+from .Controller import Controller
 
 
 # the instrument protocol
@@ -19,11 +19,8 @@ class Instrument(pet.protocol, family="pet.instruments"):
     """
 
     # required state
-    mode = Mode()
-    mode.doc = "the current mode of the instrument"
-
-    modes = pet.properties.list(schema=Mode())
-    modes.doc = "the list of beam modes supported by this instrument"
+    controller = Controller()
+    controller.doc = "the instrument controller"
 
 
 # end of file
