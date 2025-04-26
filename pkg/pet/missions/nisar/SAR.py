@@ -8,6 +8,9 @@
 # support
 import pet
 
+# my parts
+from .Controller import Controller
+
 
 # the NISAR instrument
 class SAR(pet.simulator.instruments.sar, family="pet.missions.nisar.sar"):
@@ -16,9 +19,9 @@ class SAR(pet.simulator.instruments.sar, family="pet.missions.nisar.sar"):
     """
 
     # user configurable state
-    modes = pet.properties.list(schema=pet.protocols.instruments.mode())
-    modes.default = [pet.simulator.instruments.sar.mode]
-    modes.doc = "the list of beam modes supported by the NISAR instrument"
+    controller = pet.protocols.instruments.controller()
+    controller.default = Controller
+    controller.doc = "the NISAR instrument controller"
 
 
 # end of file
