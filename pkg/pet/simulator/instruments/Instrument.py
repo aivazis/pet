@@ -23,13 +23,8 @@ class Instrument(
     """
 
     # required state
-    mode = pet.protocols.instruments.mode()
-    mode.default = modes.off()
-    mode.doc = "the current instrument mode"
-
-    modes = pet.properties.list(schema=pet.protocols.instruments.mode())
-    modes.default = [mode.default]
-    modes.doc = "the list of beam modes supported by this instrument"
+    controller = pet.protocols.instruments.controller()
+    controller.doc = "the instrument controller"
 
     # interface
     @pet.export
@@ -39,14 +34,12 @@ class Instrument(
         """
         # sign on
         channel.line(f"{self}")
-        # get my modes
-        modes = self.modes
         # indent
         channel.indent()
-        # report the current mode
-        channel.line(f"mode: {self.mode}")
-        # report the mode count
-        channel.line(f"supported modes: {len(modes)}")
+        # get my controller
+        controller = self.controller
+        # ask it to report
+        controller.report(channel=channel)
         # outdent
         channel.outdent()
         # all done

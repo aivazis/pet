@@ -8,6 +8,9 @@
 # instrument modes
 from . import modes
 
+# instrument control
+from .Controller import Controller as controller
+
 # the base instrument
 from .Instrument import Instrument as instrument
 
