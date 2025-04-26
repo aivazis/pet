@@ -31,7 +31,7 @@ class SAR(
     transmitters = pet.properties.tuple(
         schema=pet.protocols.instruments.radar.phaseCenter()
     )
-    receivers.doc = "the collection of pulse transmitters"
+    transmitters.doc = "the collection of pulse transmitters"
 
 
 # end of file
