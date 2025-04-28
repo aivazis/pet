@@ -7,17 +7,14 @@
 
 # support
 import pet
+import pet.simulator
 
 # my parts
 from .Spacecraft import Spacecraft
 
 
 # the NISAR mission
-class NISAR(
-    pet.component,
-    family="pet.missions.nisar",
-    implements=pet.protocols.missions.mission,
-):
+class NISAR(pet.simulator.mission.mission, family="pet.missions.nisar"):
     """
     The NISAR mission
     """
