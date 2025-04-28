@@ -15,6 +15,19 @@ class Mode(pet.protocol, family="pet.instruments.modes"):
     Requirements for instrument modes
     """
 
+    # interface requirements
+    @pet.provides
+    def consumes(self, resource):
+        """
+        Model the {resource} consumption by this mode as a function of time
+        """
+
+    @pet.provides
+    def measures(self, observable):
+        """
+        Check whether this instrument mode can measure the given {observable}
+        """
+
     # framework hooks
     @classmethod
     def pyre_default(cls, **kwds):
