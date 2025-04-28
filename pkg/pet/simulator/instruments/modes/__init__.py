@@ -12,6 +12,10 @@ from .Mode import Mode as mode
 from .On import On as on
 from .Off import Off as off
 from .Standby import Standby as standby
+from .Idle import Idle as idle
+
+# the base class for mode transitions
+from .Transition import Transition as transition
 
 
 # end of file
