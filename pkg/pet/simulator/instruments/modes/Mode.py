@@ -25,6 +25,14 @@ class Mode(pet.component, implements=pet.protocols.instruments.mode):
         return lambda t: 0
 
     @pet.export
+    def detects(self, observable):
+        """
+        Check whether this instrument mode can detect the given {observable}
+        """
+        # no, by default
+        return False
+
+    @pet.export
     def measures(self, observable):
         """
         Check whether this instrument mode can measure the given {observable}
