@@ -33,6 +33,14 @@ class Mode(pet.component, implements=pet.protocols.instruments.mode):
         return False
 
     @pet.export
+    def emits(self, observable):
+        """
+        Check whether this instrument mode can emit the given {observable}
+        """
+        # no, by default
+        return False
+
+    @pet.export
     def measures(self, observable):
         """
         Check whether this instrument mode can measure the given {observable}
