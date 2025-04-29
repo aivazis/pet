@@ -7,14 +7,13 @@
 
 # support
 import pet
-import pet.simulator
 
 # my parts
 from .Spacecraft import Spacecraft
 
 
 # the NISAR mission
-class NISAR(pet.simulator.mission.mission, family="pet.missions.nisar"):
+class NISAR(pet.simulator.missions.mission, family="pet.missions.nisar"):
     """
     The NISAR mission
     """
