@@ -15,7 +15,7 @@ from . import ground
 from . import control
 from . import telemetry
 from . import ops
-from . import mission
+from . import missions
 from . import physics
 
 
