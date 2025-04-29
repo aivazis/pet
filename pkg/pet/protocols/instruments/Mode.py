@@ -29,6 +29,12 @@ class Mode(pet.protocol, family="pet.instruments.modes"):
         """
 
     @pet.provides
+    def emits(self, observable):
+        """
+        Check whether this instrument mode can emit the given {observable}
+        """
+
+    @pet.provides
     def measures(self, observable):
         """
         Check whether this instrument mode can measure the given {observable}
