@@ -23,6 +23,12 @@ class Mode(pet.protocol, family="pet.instruments.modes"):
         """
 
     @pet.provides
+    def detects(self, observable):
+        """
+        Check whether this instrument mode can detect the given {observable}
+        """
+
+    @pet.provides
     def measures(self, observable):
         """
         Check whether this instrument mode can measure the given {observable}
@@ -35,7 +41,7 @@ class Mode(pet.protocol, family="pet.instruments.modes"):
         Supply a default mode when one is not specified by the user
         """
         # instruments are off by default
-        return pet.instruments.modes.off
+        return pet.simulator.instruments.modes.off
 
 
 # end of file
