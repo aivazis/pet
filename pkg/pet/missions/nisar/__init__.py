@@ -8,5 +8,9 @@
 # the mission foundry
 from .NISAR import NISAR as nisar
 
+# the instruments
+from .lsar import lsar
+from .ssar import ssar
+
 
 # end of file
