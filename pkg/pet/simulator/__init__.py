@@ -7,6 +7,8 @@
 
 # parts
 from . import sol
+from . import observables
+from . import resources
 from . import craft
 from . import instruments
 from . import ground
