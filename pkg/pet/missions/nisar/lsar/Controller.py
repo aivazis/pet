@@ -11,10 +11,10 @@ import pet
 
 # the NISAR instrument controller
 class Controller(
-    pet.simulator.instruments.controller, family="pet.missions.nisar.sar.controller"
+    pet.simulator.instruments.controller, family="pet.missions.nisar.lsar.controller"
 ):
     """
-    The NISAR instrument controller
+    The NISAR L-band instrument controller
     """
 
     # user configurable state
