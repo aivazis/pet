@@ -16,7 +16,7 @@ from .Mode import Mode
 # the state of the instrument when it is turned off
 class Off(Mode, family="pet.instruments.modes.off"):
     """
-    The instrument mode that corresponds to being turned off
+    The mode that corresponds to the instrument being turned off
     """
 
     # metamethods

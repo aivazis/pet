@@ -16,7 +16,7 @@ from .Mode import Mode
 # the state of the instrument when it is on standby
 class Idle(Mode, family="pet.instruments.modes.idle"):
     """
-    The instrument mode that corresponds to being powered on but idle
+    The mode that corresponds to the instrument being powered on but idle
     """
 
     # metamethods
