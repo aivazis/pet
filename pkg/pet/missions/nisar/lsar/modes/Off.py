@@ -5,10 +5,15 @@
 # (c) 1998-2025 all rights reserved
 
 
-# publish
-from .Idle import Idle as idle
-from .Standby import Standby as standby
-from .Off import Off as off
+# support
+import pet
+
+
+# the instrument is off
+class Off(pet.simulator.instruments.modes.off):
+    """
+    The instrument is off
+    """
 
 
 # end of file
