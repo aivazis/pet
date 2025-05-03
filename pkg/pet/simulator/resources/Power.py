@@ -19,5 +19,24 @@ class Power(Resource):
     Electrical power as a consumable resource
     """
 
+    # interface
+    def identify(self, consumer):
+        """
+        Invoke the resource handler of the {consumer}
+        """
+        # attempt to
+        try:
+            # ask the {consumer} for the base resource handler
+            handler = consumer.powerConsumption
+        # if it doesn't understand
+        except AttributeError:
+            # chain up
+            return super().identify(consumer=consumer)
+        # if its has a consumption curve, return it
+        return handler
+
+    # implementation details
+    units = pet.units.power.watt
+
 
 # end of file

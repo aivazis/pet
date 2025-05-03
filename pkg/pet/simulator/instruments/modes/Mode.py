@@ -21,8 +21,8 @@ class Mode(pet.component, implements=pet.protocols.instruments.mode):
         """
         Model the {resource} consumption by this mode as a function of time
         """
-        # no, by default
-        return lambda t: 0
+        # ask the resource to identify itself and extract the resource consumption rate
+        return resource.identify(consumer=self)
 
     @pet.export
     def detects(self, observable):
@@ -47,6 +47,14 @@ class Mode(pet.component, implements=pet.protocols.instruments.mode):
         """
         # no, by default
         return False
+
+    # implementation details
+    def resourceConsumption(self, t, resource, **kwds):
+        """
+        The handler for resources that this mode is not aware of
+        """
+        # by default, unknown resources are not consumed
+        return 0 * resource.units
 
 
 # end of file
