@@ -10,11 +10,11 @@ import pet
 
 
 # superclass
-from .Mode import Mode
+from .On import On
 
 
 # the state of the instrument when it is on standby
-class Idle(Mode, family="pet.instruments.modes.idle"):
+class Idle(On, family="pet.instruments.modes.idle"):
     """
     The mode that corresponds to the instrument being powered on but idle
     """
