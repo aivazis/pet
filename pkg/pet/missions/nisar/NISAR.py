@@ -53,16 +53,18 @@ class NISAR(pet.simulator.missions.mission, family="pet.missions.nisar"):
         """
         Hook invoked after a NISAR mission instance is fully configured
         """
+        # all done; chain up
+        yield from super().pyre_configured(**kwds)
         # get my craft
         craft = self.craft
         # if the list is empty
         if not craft:
             # the user has not expressed any opinions, so build the default craft
-            spacecraft = Spacecraft(name=f"{self.pyre_name}.spacecraft")
+            spacecraft = Spacecraft(name=f"{self.pyre_name}.primary")
             # put in a list and attach it to the mission
             self.craft = [spacecraft]
-        # all done; chain up
-        return super().pyre_configured(**kwds)
+        # all done
+        return
 
 
 # end of file

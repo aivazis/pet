@@ -65,6 +65,8 @@ class Spacecraft(
         """
         Hook invoked after a NISAR spacecraft instance is fully configured
         """
+        # chain up
+        yield from super().pyre_configured(**kwds)
         # get my instruments
         instruments = self.instruments
         # if the list is empty
@@ -73,8 +75,8 @@ class Spacecraft(
             instrument = LSAR(name=f"{self.pyre_name}.lsar")
             # put it in a list and attach it to this spacecraft
             self.instruments = [instrument]
-        # all done; chain up
-        return super().pyre_configured(**kwds)
+        # all done
+        return
 
 
 # end of file
