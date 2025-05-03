@@ -53,7 +53,7 @@ class Controller(
         # go through the modes
         for mode in modes:
             # and report on each one
-            channel.line(f"{mode}")
+            channel.line(f"{mode}: {mode.pyre_name}")
         # outdent
         channel.outdent()
 
