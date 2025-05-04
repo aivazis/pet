@@ -12,12 +12,10 @@ import pet
 from .Spacecraft import Spacecraft
 
 
-# the base mission craft
-class Orbiter(
-    Spacecraft, family="pet.craft.orbiters.base", implements=pet.protocols.craft.orbiter
-):
+# the base probe
+class Probe(Spacecraft, implements=pet.protocols.observatories.probe):
     """
-    A base orbiter
+    A base probe
     """
 
 

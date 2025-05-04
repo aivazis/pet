@@ -16,8 +16,12 @@ class Mission(pet.component, implements=pet.protocols.missions.mission):
     """
 
     # user configurable state
-    craft = pet.properties.list(schema=pet.protocols.craft.craft())
-    craft.doc = "the constellation of craft that carry the mission instruments"
+    observatories = pet.properties.list(
+        schema=pet.protocols.observatories.observatory()
+    )
+    observatories.doc = (
+        "the constellation of observatories that carry the mission instruments"
+    )
 
 
 # end of file

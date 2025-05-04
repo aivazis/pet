@@ -9,7 +9,7 @@
 import pet
 
 # my parts
-from .Spacecraft import Spacecraft
+from .Orbiter import Orbiter
 
 
 # the NISAR mission
@@ -19,9 +19,11 @@ class NISAR(pet.simulator.missions.mission, family="pet.missions.nisar"):
     """
 
     # user configurable state
-    craft = pet.properties.list(schema=pet.protocols.craft.orbiter())
-    craft.default = []
-    craft.doc = "the constellation of craft that carry the mission instruments"
+    observatories = pet.properties.list(schema=pet.protocols.observatories.orbiter())
+    observatories.default = []
+    observatories.doc = (
+        "the constellation of observatories that carry the mission instruments"
+    )
 
     # interface
     @pet.export
@@ -33,14 +35,14 @@ class NISAR(pet.simulator.missions.mission, family="pet.missions.nisar"):
         channel.line(f"{self}")
         # indent
         channel.indent()
-        # go through my craft
-        for idx, craft in enumerate(self.craft):
+        # go through my observatories
+        for idx, observatory in enumerate(self.observatories):
             # mark
-            channel.line(f"craft {idx}:")
+            channel.line(f"observatory {idx}:")
             # indent
             channel.indent()
             # ask the craft to report
-            craft.report(channel=channel)
+            observatory.report(channel=channel)
             # and outdent
             channel.outdent()
         # outdent
@@ -56,13 +58,13 @@ class NISAR(pet.simulator.missions.mission, family="pet.missions.nisar"):
         # all done; chain up
         yield from super().pyre_configured(**kwds)
         # get my craft
-        craft = self.craft
+        observatories = self.observatories
         # if the list is empty
-        if not craft:
+        if not observatories:
             # the user has not expressed any opinions, so build the default craft
-            spacecraft = Spacecraft(name=f"{self.pyre_name}.primary")
+            primary = Orbiter(name=f"{self.pyre_name}.primary")
             # put in a list and attach it to the mission
-            self.craft = [spacecraft]
+            self.observatories = [primary]
         # all done
         return
 

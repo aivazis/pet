@@ -9,11 +9,11 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Observatory import Observatory
 
 
 # the platform that carries the mission instruments
-class Spacecraft(Craft, family="pet.craft.spacecraft"):
+class Spacecraft(Observatory, family="pet.observatories.spacecraft"):
     """
     Spacecraft requirements
     """

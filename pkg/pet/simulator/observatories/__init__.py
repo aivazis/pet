@@ -5,8 +5,8 @@
 # (c) 1998-2025 all rights reserved
 
 
-# generic craft
-from .Craft import Craft as craft
+# base craft
+from .Observatory import Observatory as observatory
 
 # spacecraft
 from .Spacecraft import Spacecraft as spacecraft
@@ -17,5 +17,6 @@ from .Probe import Probe as probe
 
 # others
 from .UAV import UAV as uav
+
 
 # end of file

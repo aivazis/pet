@@ -9,13 +9,13 @@
 import pet
 
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
-# the requirements for unmanned aerial vehicles
-class UAV(Craft, family="pet.craft.uav"):
+# probes are craft
+class Probe(Spacecraft, family="pet.observatories.probes"):
     """
-    UAV requirements
+    The probe requirements
     """
 
 

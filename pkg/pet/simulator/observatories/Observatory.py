@@ -9,15 +9,15 @@
 import pet
 
 
-# the base mission craft
-class Craft(pet.component, implements=pet.protocols.craft.craft):
+# the base mission observatory
+class Observatory(pet.component, implements=pet.protocols.observatories.observatory):
     """
-    Base class for all craft implementations
+    Base class for all observatory implementations
     """
 
     # required state
     instruments = pet.properties.list(schema=pet.protocols.instruments.instrument())
-    instruments.doc = "the list of instruments on this craft"
+    instruments.doc = "the list of instruments on this observatory"
 
 
 # end of file

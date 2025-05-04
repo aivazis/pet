@@ -12,10 +12,10 @@ import pet
 from .Spacecraft import Spacecraft
 
 
-# probes are craft
-class Probe(Spacecraft, family="pet.craft.probes"):
+# the base lander
+class Lander(Spacecraft, implements=pet.protocols.observatories.lander):
     """
-    The probe requirements
+    A base lander
     """
 
 

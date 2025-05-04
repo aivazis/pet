@@ -8,15 +8,14 @@
 # support
 import pet
 
-
 # superclass
-from .Craft import Craft
+from .Spacecraft import Spacecraft
 
 
-# the base UAV implementation
-class UAV(Craft, family="pet.craft.uav.base", implements=pet.protocols.craft.uav):
+# the base orbiter
+class Orbiter(Spacecraft, implements=pet.protocols.observatories.orbiter):
     """
-    Base class for all UAV implementations
+    A base orbiter
     """
 
 

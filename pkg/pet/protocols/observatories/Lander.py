@@ -13,9 +13,9 @@ from .Spacecraft import Spacecraft
 
 
 # landers are craft
-class Lander(Spacecraft, family="pet.craft.landers"):
+class Lander(Spacecraft, family="pet.observatories.landers"):
     """
-    The requirements for spacecraft can land
+    The requirements for spacecraft that can land
     """
 
 

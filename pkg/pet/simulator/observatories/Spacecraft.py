@@ -10,13 +10,13 @@ import pet
 
 
 # superclass
-from .Craft import Craft
+from .Observatory import Observatory
 
 
-# the base mission craft
-class Spacecraft(Craft, implements=pet.protocols.craft.spacecraft):
+# the base mission spacecraft
+class Spacecraft(Observatory, implements=pet.protocols.observatories.spacecraft):
     """
-    Base class for all craft implementations
+    Base class for all spacecraft implementations
     """
 
     # required state

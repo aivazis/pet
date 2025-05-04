@@ -12,10 +12,10 @@ import pet
 from .. import instruments
 
 
-# the platform that carries the mission instruments
-class Craft(pet.protocol, family="pet.craft"):
+# the host of the mission instruments
+class Observatory(pet.protocol, family="pet.observatories"):
     """
-    The craft requirements
+    The base class for the entities that host the mission hardware
     """
 
     # required state

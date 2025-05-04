@@ -10,7 +10,7 @@ from . import data
 
 # basic concepts
 from . import instruments
-from . import craft
+from . import observatories
 from . import missions
 from . import ops
 

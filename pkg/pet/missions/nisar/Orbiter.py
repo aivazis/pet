@@ -13,10 +13,10 @@ from .lsar.LSAR import LSAR
 
 
 # the NISAR spacecraft
-class Spacecraft(
+class Orbiter(
     pet.component,
     family="pet.craft.orbiters.nisar",
-    implements=pet.protocols.craft.orbiter,
+    implements=pet.protocols.observatories.orbiter,
 ):
     """
     The NISAR spacecraft

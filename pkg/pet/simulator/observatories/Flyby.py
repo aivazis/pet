@@ -12,10 +12,10 @@ import pet
 from .Spacecraft import Spacecraft
 
 
-# flyby spacecraft are craft
-class Flyby(Spacecraft, family="pet.craft.flyby"):
+# the base flyby
+class Flyby(Spacecraft, implements=pet.protocols.observatories.flyby):
     """
-    The requirements for spacecraft that fly by a body
+    A base flyby spacecraft
     """
 
 
