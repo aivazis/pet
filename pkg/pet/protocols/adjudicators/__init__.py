@@ -6,8 +6,11 @@
 
 
 # publish
-from .Objective import Objective as objective
+# adjudicators
+from .Adjudicator import Adjudicator as adjudicator
 from .Planner import Planner as planner
 
+# objectives
+from .Objective import Objective as objective
 
 # end of file

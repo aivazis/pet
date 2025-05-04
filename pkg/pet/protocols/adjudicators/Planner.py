@@ -8,19 +8,15 @@
 # support
 import pet
 
-# parts
-from .. import missions
+# superclass
+from .Adjudicator import Adjudicator
 
 
 # the requirements for mission planners
-class Planner(pet.protocol, family="pet.adjudicators.planners"):
+class Planner(Adjudicator, family="pet.adjudicators.planners"):
     """
     Requirements for mission planners
     """
-
-    # the mission
-    mission = missions.mission()
-    mission.doc = "the mission characteristics"
 
     # the simulation window
     start = pet.properties.timestamp()
@@ -30,7 +26,7 @@ class Planner(pet.protocol, family="pet.adjudicators.planners"):
     stop.doc = "the end of the simulation window"
 
     dt = pet.properties.dimensional()
-    dt.doc = "the sampling "
+    dt.doc = "the sampling interval"
 
     # interface obligations
     @pet.provides
