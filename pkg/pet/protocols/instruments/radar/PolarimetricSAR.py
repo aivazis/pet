@@ -13,7 +13,7 @@ from .SAR import SAR
 
 
 # the polarimetric SAR protocol
-class PolarimetricSAR(SAR, family="pet.instruments.radar.polarimetricSAR"):
+class PolarimetricSAR(SAR, family="pet.instruments.polarimetricSAR"):
     """
     Requirements for polarimetric SAR instruments
     """

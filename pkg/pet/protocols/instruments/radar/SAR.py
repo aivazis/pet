@@ -16,7 +16,7 @@ from .PhaseCenter import PhaseCenter
 
 
 # the synthetic aperture radar protocol
-class SAR(Imager, family="pet.instruments.radar.sar"):
+class SAR(Imager, family="pet.instruments.sar"):
     """
     Requirements for synthetic aperture radar instruments
     """
