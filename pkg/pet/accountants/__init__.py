@@ -10,5 +10,8 @@ This is the home of the entities that assess cost, resource utilization, and any
 non-science related that might constrain mission design
 """
 
+# publish
+from . import resources
+
 
 # end of file

@@ -10,20 +10,21 @@ import pet
 
 
 # the base resource
-class Resource:
+class Resource(pet.component, implements=pet.protocols.accountants.resource):
     """
     The base class for all mission resources
     """
 
     # interface
+    @pet.export
     def identify(self, consumer):
         """
-        Invoke the resource handler of the {consumer}
+        Retrieve the consumption curve for this resource from {consumer}
         """
         # attempt to
         try:
-            # ask the {consumer} for the base resource handler
-            handler = consumer.resourceConsumption
+            # ask {consumer} for the base consumption curve
+            curve = consumer.resourceConsumption
         # if it doesn't understand
         except AttributeError:
             # get my class
@@ -37,7 +38,7 @@ class Resource:
             ) from None
         # the base consumption curve is, by definition, resource agnostic, so it needs some
         # help to return dimensional quantities
-        return lambda t: handler(t, resource=self)
+        return lambda t: curve(t, resource=self)
 
     # implementation details
     units = pet.units.zero
