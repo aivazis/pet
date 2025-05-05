@@ -9,13 +9,13 @@
 import pet
 
 # superclass
-from .Airborne import Airborne
+from .Observatory import Observatory
 
 
-# the requirements for unmanned aerial vehicles
-class UAV(Airborne, family="pet.observatories.uav"):
+# instrument platforms that fly in an atmosphere
+class Airborne(Observatory, family="pet.observatories.airborne"):
     """
-    UAV requirements
+    Requirements for airborne observatories
     """
 
 

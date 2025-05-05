@@ -12,10 +12,10 @@ import pet
 from .Airborne import Airborne
 
 
-# the requirements for unmanned aerial vehicles
-class UAV(Airborne, family="pet.observatories.uav"):
+# the requirements for aircraft that host instruments
+class Aircraft(Airborne, family="pet.observatories.aircraft"):
     """
-    UAV requirements
+    Requirements for aircraft
     """
 
 

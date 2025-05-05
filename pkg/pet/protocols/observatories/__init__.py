@@ -5,8 +5,16 @@
 # (c) 1998-2025 all rights reserved
 
 
-# generic craft
+# the base class for all instrument hosts
 from .Observatory import Observatory as observatory
+
+# ground installations
+from .Ground import Ground as ground
+
+# aircraft
+from .Airborne import Airborne as airborne
+from .Aircraft import Aircraft as aircraft
+from .UAV import UAV as uav
 
 # spacecraft
 from .Spacecraft import Spacecraft as spacecraft
@@ -15,7 +23,5 @@ from .Lander import Lander as lander
 from .Orbiter import Orbiter as orbiter
 from .Probe import Probe as probe
 
-# others
-from .UAV import UAV as uav
 
 # end of file

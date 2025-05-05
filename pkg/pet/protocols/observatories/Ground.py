@@ -9,13 +9,13 @@
 import pet
 
 # superclass
-from .Airborne import Airborne
+from .Observatory import Observatory
 
 
-# the requirements for unmanned aerial vehicles
-class UAV(Airborne, family="pet.observatories.uav"):
+# ground installations
+class Ground(Observatory, family="pet.observatories.ground"):
     """
-    UAV requirements
+    Fixed installations on the ground
     """
 
 
