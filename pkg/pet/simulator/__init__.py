@@ -8,7 +8,6 @@
 # parts
 from . import sol
 from . import observables
-from . import resources
 from . import observatories
 from . import instruments
 from . import ground
