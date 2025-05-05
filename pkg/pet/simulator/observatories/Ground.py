@@ -10,13 +10,13 @@ import pet
 
 
 # superclass
-from .Airborne import Airborne
+from .Observatory import Observatory
 
 
-# the base UAV implementation
-class UAV(Airborne, implements=pet.protocols.observatories.uav):
+# the base ground observatory
+class Ground(Observatory, implements=pet.protocols.observatories.ground):
     """
-    Base class for all UAV implementations
+    Base class for the implementation of ground observatories
     """
 
 

@@ -13,10 +13,10 @@ import pet
 from .Airborne import Airborne
 
 
-# the base UAV implementation
-class UAV(Airborne, implements=pet.protocols.observatories.uav):
+# the base class for aircraft that host instruments
+class Aircraft(Airborne, implements=pet.protocols.observatories.aircraft):
     """
-    Base class for all UAV implementations
+    Base class for aircraft that carry instruments
     """
 
 
