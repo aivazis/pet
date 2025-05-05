@@ -10,10 +10,17 @@ import pet
 
 
 # requirements for the quantities accountants care about
-class Resource(pet.protocol, family="pet.resources"):
+class Resource(pet.protocol, family="pet.accountants.resources"):
     """
     Requirements for the various quantities that accountants keep track of
     """
+
+    # required interface
+    @pet.provides
+    def identify(self, consumer, **kwds):
+        """
+        Retrieve the consumption curve for this resource from {consumer}
+        """
 
 
 # end of file
