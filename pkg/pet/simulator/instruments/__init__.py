@@ -19,7 +19,9 @@ from .Altimeter import Altimeter as altimeter
 from .Imager import Imager as imager
 from .Magnetometer import Magnetometer as magnetometer
 from .Radiometer import Radiometer as radiometer
-from .SAR import SAR as sar
+
+# radar
+from . import radar
 
 
 # end of file
