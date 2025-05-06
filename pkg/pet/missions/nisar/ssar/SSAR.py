@@ -13,7 +13,7 @@ from .Controller import Controller
 
 
 # the NISAR L-band instrument
-class SSAR(pet.simulator.instruments.sar, family="pet.missions.nisar.ssar"):
+class SSAR(pet.simulator.instruments.radar.sar, family="pet.missions.nisar.ssar"):
     """
     The NISAR S-band instrument
     """
