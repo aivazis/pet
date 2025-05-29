@@ -17,7 +17,8 @@ pet.tests := pet.lib.tests pet.ext.tests pet.pkg.tests
 
 # docker images
 pet.docker-images := \
-  pet.dev.noble-gcc pet.dev.noble-clang
+  pet.dev.noble-gcc pet.dev.noble-clang \
+  pet.dev.plucky-gcc pet.dev.plucky-clang \
 
 
 # load the packages
