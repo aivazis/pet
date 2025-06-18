@@ -8,8 +8,8 @@
 pet.dev.native.noble-clang.name := noble-clang
 pet.dev.native.noble-clang.root := etc/docker/dev/native/
 pet.dev.native.noble-clang.launch.mounts := mm pyre pet
-# pet listens on port 8005, by default; map it to port 9005 on the host
-pet.dev.native.noble-clang.launch.options := -p 9005:8005
+# pet listens on port 8006, by default; map it to port 9006 on the host
+pet.dev.native.noble-clang.launch.options := -p 9006:8006
 
 
 # end of file

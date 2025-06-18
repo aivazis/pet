@@ -8,8 +8,8 @@
 pet.dev.native.plucky-gcc.name := plucky-gcc
 pet.dev.native.plucky-gcc.root := etc/docker/dev/native/
 pet.dev.native.plucky-gcc.launch.mounts := mm pyre pet
-# pet listens on port 8005, by default; map it to port 9005 on the host
-pet.dev.native.plucky-gcc.launch.options := -p 9005:8005
+# pet listens on port 8006, by default; map it to port 9006 on the host
+pet.dev.native.plucky-gcc.launch.options := -p 9006:8006
 
 
 # end of file
