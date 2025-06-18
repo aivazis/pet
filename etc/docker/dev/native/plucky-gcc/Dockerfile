@@ -7,7 +7,7 @@
 FROM ubuntu:plucky
 
 # set up some build variables
-ARG instance=dev/plucky-gcc
+ARG instance=dev/native/plucky-gcc
 # python version
 ARG python_version=3.13
 ARG python=python${python_version}

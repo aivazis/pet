@@ -7,7 +7,7 @@
 FROM ubuntu:noble
 
 # set up some build variables
-ARG instance=dev/noble-gcc
+ARG instance=dev/native/noble-gcc
 # python version
 ARG python_version=3.12
 ARG python=python${python_version}
