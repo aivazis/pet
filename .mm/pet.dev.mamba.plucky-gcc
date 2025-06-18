@@ -1,0 +1,15 @@
+# -*- makefile -*-
+#
+# michael a.g. aïvázis <michael.aivazis@para-sim.com>
+# (c) 1998-2025 all rights reserved
+
+
+# plucky-gcc image configuration
+pet.dev.mamba.plucky-gcc.name := plucky-gcc
+pet.dev.mamba.plucky-gcc.root := etc/docker/dev/mamba/
+pet.dev.mamba.plucky-gcc.launch.mounts := mm pyre pet
+# pet listens on port 8005, by default; map it to port 9005 on the host
+pet.dev.mamba.plucky-gcc.launch.options := -p 9006:8006
+
+
+# end of file

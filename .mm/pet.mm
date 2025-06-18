@@ -25,7 +25,7 @@ pet.mamba := \
   pet.dev.mamba.noble-gcc pet.dev.mamba.noble-clang \
   pet.dev.mamba.plucky-gcc pet.dev.mamba.plucky-clang \
 
-pet.docker-images := ${pet.native} #${pet.mamba}
+pet.docker-images := ${pet.native} ${pet.mamba}
 
 # load the packages
 include $(pet.packages)
