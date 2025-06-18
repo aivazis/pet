@@ -5,11 +5,11 @@
 
 
 # plucky-gcc image configuration
-pet.dev.plucky-gcc.name := plucky-gcc
-pet.dev.plucky-gcc.root := etc/docker/dev/
-pet.dev.plucky-gcc.launch.mounts := mm pyre pet
+pet.dev.native.plucky-gcc.name := plucky-gcc
+pet.dev.native.plucky-gcc.root := etc/docker/dev/native/
+pet.dev.native.plucky-gcc.launch.mounts := mm pyre pet
 # pet listens on port 8005, by default; map it to port 9005 on the host
-pet.dev.plucky-gcc.launch.options := -p 9005:8005
+pet.dev.native.plucky-gcc.launch.options := -p 9005:8005
 
 
 # end of file

@@ -5,11 +5,11 @@
 
 
 # noble-clang image configuration
-pet.dev.noble-clang.name := noble-clang
-pet.dev.noble-clang.root := etc/docker/dev/
-pet.dev.noble-clang.launch.mounts := mm pyre pet
+pet.dev.native.noble-clang.name := noble-clang
+pet.dev.native.noble-clang.root := etc/docker/dev/native/
+pet.dev.native.noble-clang.launch.mounts := mm pyre pet
 # pet listens on port 8005, by default; map it to port 9005 on the host
-pet.dev.noble-clang.launch.options := -p 9005:8005
+pet.dev.native.noble-clang.launch.options := -p 9005:8005
 
 
 # end of file

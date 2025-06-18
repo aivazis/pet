@@ -16,10 +16,16 @@ pet.webpack := pet.ux
 pet.tests := pet.lib.tests pet.ext.tests pet.pkg.tests
 
 # docker images
-pet.docker-images := \
-  pet.dev.noble-gcc pet.dev.noble-clang \
-  pet.dev.plucky-gcc pet.dev.plucky-clang \
+# using ubuntu native package management
+pet.native := \
+  pet.dev.native.noble-gcc pet.dev.native.noble-clang \
+  pet.dev.native.plucky-gcc pet.dev.native.plucky-clang \
+# using micromamba built environments
+pet.mamba := \
+  pet.dev.mamba.noble-gcc pet.dev.mamba.noble-clang \
+  pet.dev.mamba.plucky-gcc pet.dev.mamba.plucky-clang \
 
+pet.docker-images := ${pet.native} #${pet.mamba}
 
 # load the packages
 include $(pet.packages)
