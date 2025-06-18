@@ -345,7 +345,7 @@ def decorateWindow(cwd):
     # get the instance name
     hostname = "@INSTANCE@"
     # assemble the title
-    title = f"qed@{hostname}:{cwd}"
+    title = f"pet@{hostname}:{cwd}"
     # and decorate the window
     yield xtermSetWindowTitle.format(title=title)
     # all done

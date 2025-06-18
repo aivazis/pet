@@ -1,4 +1,4 @@
-## -*- docker-image-name: "qed:plucky-gcc" -*-
+## -*- docker-image-name: "pet:plucky-gcc" -*-
 #
 # michael a.g. aïvázis <michael.aivazis@para-sim.com>
 # (c) 1998-2025 all rights reserved

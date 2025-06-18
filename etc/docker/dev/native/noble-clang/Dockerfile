@@ -1,4 +1,4 @@
-## -*- docker-image-name: "qed:noble-clang" -*-
+## -*- docker-image-name: "pet:noble-clang" -*-
 #
 # michael a.g. aïvázis <michael.aivazis@para-sim.com>
 # (c) 1998-2025 all rights reserved
