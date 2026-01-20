@@ -195,7 +195,7 @@ following:
 
     mm 5.0.0
     Michael Aïvázis <michael.aivazis@para-sim.com>
-    copyright 1998-2025 all rights reserved
+    copyright 1998-2026 all rights reserved
 
 builder directory layout:
   staging layout:
@@ -268,7 +268,7 @@ By default, the application operates as a command line tool:
 ~/dv/pet> pet
 
   pet 0.0.1 revision 5f052d9
-  copyright (c) 1998-2025 all rights reserved
+  copyright (c) 1998-2026 all rights reserved
 
   The main action dispatcher
 
